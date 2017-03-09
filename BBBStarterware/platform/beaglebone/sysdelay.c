@@ -59,7 +59,7 @@
 
 /* If delay using interrupts is desire define this. If polling is desired,
    undefine this */
-#define DELAY_USE_INTERRUPTS            1  
+//#define DELAY_USE_INTERRUPTS            1
 
 /******************************************************************************
 **                      INTERNAL FUNCTION PROTOTYPES
@@ -131,7 +131,7 @@ void Sysdelay(unsigned int milliSec)
     while(FALSE == flagIsr) ;
 
     /* Disable the DMTimer interrupts */
-    DMTimerIntDisable(SOC_DMTIMER_7_REGS, DMTIMER_INT_OVF_EN_FLAG);
+     DMTimerIntDisable(SOC_DMTIMER_7_REGS, DMTIMER_INT_OVF_EN_FLAG);
 
 #else
     while(milliSec != 0)

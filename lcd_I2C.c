@@ -8,8 +8,10 @@
 
 #include "lcd_I2C.h"
 
+#undef DELAY_USE_INTERRUPTS
+
 #define DISP_ON_LEN 2
-//#define DISP_ON_CMD "\x00\x0C"
+#define CMD_DISP_ON "\x00\x0C"
 
 void setupLCD_I2C(uint32_t baseAddr)
 {
@@ -37,14 +39,70 @@ void setupLCD_I2C(uint32_t baseAddr)
     I2CMasterEnable(baseAddr);
 }//end setupI2C
 
+void clearDisplay(uint32_t baseAddr){
+	char clearCmd[] = {SLAVE_ADDR_I2C, 0x00, 0x01};
+	transmit_I2C(baseAddr, clearCmd, 3);
+
+}
+
+
+void sendMsg(uint32_t baseAddr, char *msg)
+{
+	char dataToSlave[MSG_LEN_MAX] = {'\0'};
+	dataToSlave[0] = 0x40;
+	snprintf(dataToSlave+1, MSG_LEN_MAX-1, msg);
+
+	transmit_I2C(baseAddr, dataToSlave, strlen(dataToSlave));
+}// end sendMsg
+
 void turnOnLCD(uint32_t baseAddr)
 {
-	setTransmit_I2C(baseAddr, DISP_ON_LEN);
+	char dispCmd[20] = {'\0'};
 
+	dispCmd[0] = SLAVE_ADDR_I2C;
+	dispCmd[1] = 0x00;
+
+	dispCmd[2] = 0x38;
+	transmit_I2C(baseAddr, dispCmd, 3);
+	delay(10);
+
+	dispCmd[2] = 0x39;
+	transmit_I2C(baseAddr, dispCmd, 3);
+	delay(10);
+
+	dispCmd[2] = 0x14;
+	transmit_I2C(baseAddr, dispCmd, 3);
+	delay(10);
+
+	dispCmd[2] = 0x78;
+	transmit_I2C(baseAddr, dispCmd, 3);
+	delay(10);
+
+	dispCmd[2] = 0x5E;
+	transmit_I2C(baseAddr, dispCmd, 3);
+	delay(10);
+
+	dispCmd[2] = 0x6D;
+	transmit_I2C(baseAddr, dispCmd, 3);
+	delay(10);
+
+	dispCmd[2] = 0x0F;
+	transmit_I2C(baseAddr, dispCmd, 3);
+	delay(10);
+
+	dispCmd[2] = 0x01;
+	transmit_I2C(baseAddr, dispCmd, 3);
+	delay(10);
+
+	dispCmd[2] = 0x06;
+	transmit_I2C(baseAddr, dispCmd, 3);
+	delay(10);
 }// end turnOnLCD
 
-void setTransmit_I2C(uint32_t baseAddr, uint32_t transLen)
+void transmit_I2C(uint32_t baseAddr, uint8_t *toSlave, uint32_t transLen)
 {
+	int i = 0;
+
 	/* Data Count specifies the number of bytes to be transferred, acceess
 	 * and fills offset: 0x98 I2C_CNT */
     I2CSetDataCount(baseAddr, transLen);
@@ -59,11 +117,29 @@ void setTransmit_I2C(uint32_t baseAddr, uint32_t transLen)
     /* Generated Start Condition over I2C bus */
     I2CMasterStart(baseAddr);
 
-    /* Wait untill I2C registers are ready to access */
-    while(0 == (I2CMasterIntRawStatus(baseAddr) & I2C_INT_ADRR_READY_ACESS));
-}
+    do{
+    	if(I2CMasterIntRawStatus(baseAddr) & 0x10){
+    		/* Put data to data transmit register of i2c */
+    		I2CMasterDataPut(baseAddr, toSlave[i]);
+    		runDelay(10);
+    		++i;
+    	 }
+    }while(i < transLen);
 
-// namespace cleanup
-#undef DISP_ON_LEN
-#undef DISP_ON_CMD
+    /* generate stop */
+    I2CMasterStop(baseAddr);
+}// end setTransmit_I2C
+
+void runDelay(uint32_t milliSec)
+{
+    while(milliSec != 0)
+    {
+        DMTimerCounterSet(SOC_DMTIMER_7_REGS, 0);
+        DMTimerEnable(SOC_DMTIMER_7_REGS);
+        while(DMTimerCounterGet(SOC_DMTIMER_7_REGS) < TIMER_1MS_COUNT);
+        DMTimerDisable(SOC_DMTIMER_7_REGS);
+        milliSec--;
+    }
+}// end runDelay
+
 /******** EOF ******/
