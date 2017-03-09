@@ -182,7 +182,10 @@ int main(void)
 static void nextLine (void){
 	tCount = 0;
 	dataToSlave[0] = 0x00;
-	dataToSlave[1] = 0xC0;
+	dataToSlave[1] = 0xC0; // set DDRAM ADdress command, sets cursor to the next
+						   // vertical line on the screen. The Address of the second
+						   // line is 0x40, the 0x80 bit lets the LCD screen know the
+						   // command is Set DDRAM Address
 	SetupI2CTransmit(2);
 
 }
@@ -381,8 +384,6 @@ void I2CIsr(void)
               I2CMasterStop(SOC_I2C_1_REGS);
 
          }
-
-
     }
     if (status & I2C_INT_TRANSMIT_READY)
     {
