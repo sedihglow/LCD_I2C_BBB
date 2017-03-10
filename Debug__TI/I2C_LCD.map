@@ -1,7 +1,7 @@
 ******************************************************************************
                   TI ARM Linker PC v5.2.5                      
 ******************************************************************************
->> Linked Thu Mar 09 14:49:00 2017
+>> Linked Fri Mar 10 12:07:23 2017
 
 OUTPUT FILE NAME:   <I2C_LCD.out>
 ENTRY POINT SYMBOL: "Entry"  address: 80000000
@@ -11,23 +11,23 @@ MEMORY CONFIGURATION
 
          name            origin    length      used     unused   attr    fill
 ----------------------  --------  ---------  --------  --------  ----  --------
-  DDR0                  80000000   40000000  000060ec  3fff9f14  RWIX
+  DDR0                  80000000   40000000  00006094  3fff9f6c  RWIX
 
 
 SEGMENT ALLOCATION MAP
 
 run origin  load origin   length   init length attrs members
 ----------  ----------- ---------- ----------- ----- -------
-80000000    80000000    00005bf4   00005bf4    r-x
+80000000    80000000    00005b9c   00005b9c    r-x
   80000000    80000000    000000d0   000000d0    r-x .text:Entry
-  800000d0    800000d0    00005b24   00005b24    r-x .text
-80005bf4    80005bf4    00000200   00000000    rw-
-  80005bf4    80005bf4    00000200   00000000    rw- .bss
-80005df8    80005df8    00000148   00000000    rw-
-  80005df8    80005df8    00000148   00000000    rw- .data
-80005f40    80005f40    000001a8   000001a8    r--
-  80005f40    80005f40    00000140   00000140    r-- .const
-  80006080    80006080    00000068   00000068    r-- .cinit
+  800000d0    800000d0    00005acc   00005acc    r-x .text
+80005b9c    80005b9c    00000200   00000000    rw-
+  80005b9c    80005b9c    00000200   00000000    rw- .bss
+80005da0    80005da0    00000148   00000000    rw-
+  80005da0    80005da0    00000148   00000000    rw- .data
+80005ee8    80005ee8    000001a8   000001a8    r--
+  80005ee8    80005ee8    00000140   00000140    r-- .const
+  80006028    80006028    00000068   00000068    r-- .cinit
 87fffff0    87fffff0    00000008   00000000    rw-
   87fffff0    87fffff0    00000008   00000000    rw- .stack
 
@@ -42,100 +42,100 @@ section   page    origin      length       input sections
                   80000000    000000c8     system.lib : init.obj (.text:Entry)
                   800000c8    00000008     rtsv7A8_A_le_eabi.lib : autoinit.obj (.tramp.__TI_auto_init.1)
 
-.text      0    800000d0    00005b24     
+.text      0    800000d0    00005acc     
                   800000d0    00001a70     rtsv7A8_A_le_eabi.lib : _printfi.obj (.text)
                   80001b40    00000ad0     drivers.lib : hsi2c.obj (.text)
                   80002610    00000780     platform.lib : dmtimer.obj (.text)
                   80002d90    0000069c     drivers.lib : dmtimer.obj (.text)
                   8000342c    00000488     system.lib : cp15.obj (.text)
                   800038b4    00000418     platform.lib : hsi2c.obj (.text)
-                  80003ccc    00000330     lcd_I2C.obj (.text)
-                  80003ffc    000002b8     rtsv7A8_A_le_eabi.lib : ull_div32.obj (.text)
-                  800042b4    00000214                           : fd_add32.obj (.text)
-                  800044c8    000001a8                           : xdscale.obj (.text)
-                  80004670    00000190                           : fd_div32.obj (.text)
-                  80004800    00000180                           : memcpy32.obj (.text)
-                  80004980    00000160                           : xdnorm.obj (.text)
-                  80004ae0    00000128                           : fd_mul32.obj (.text)
-                  80004c08    00000114                           : i_div32.obj (.text)
-                  80004d1c    0000010c     system.lib : exceptionhandler.obj (.text)
-                  80004e28    00000104     rtsv7A8_A_le_eabi.lib : snprintf.obj (.text)
-                  80004f2c    000000f0     platform.lib : sysdelay.obj (.text)
-                  8000501c    000000f0     rtsv7A8_A_le_eabi.lib : u_div32.obj (.text)
-                  8000510c    000000e0                           : fd_cmp32.obj (.text:__aeabi_cdcmple)
-                  800051ec    000000e0                           : fd_cmp32.obj (.text:__aeabi_cdrcmple)
-                  800052cc    000000b8                           : xdunscal.obj (.text)
-                  80005384    000000b0                           : memset32.obj (.text)
-                  80005434    000000a4                           : autoinit.obj (.text)
-                  800054d8    000000a0                           : copy_decompress_rle.obj (.text)
-                  80005578    00000084                           : atoi.obj (.text)
-                  800055fc    00000084                           : cpy_tbl.obj (.text)
-                  80005680    00000084     system.lib : startup.obj (.text)
-                  80005704    00000080     rtsv7A8_A_le_eabi.lib : ltoa.obj (.text)
-                  80005784    00000068                           : ldexp.obj (.text)
-                  800057ec    00000064                           : signal.obj (.text)
-                  80005850    00000060     system.lib : cpu.obj (.text)
-                  800058b0    0000005c     rtsv7A8_A_le_eabi.lib : fd_toi32.obj (.text)
-                  8000590c    00000058                           : feraiseexcept.obj (.text)
-                  80005964    0000004c     main.obj (.text)
-                  800059b0    0000004c     rtsv7A8_A_le_eabi.lib : raise.obj (.text)
-                  800059fc    0000004c     utils.lib : delay.obj (.text)
-                  80005a48    00000044     rtsv7A8_A_le_eabi.lib : xferaise.obj (.text)
-                  80005a8c    0000003c                           : i_tofd32.obj (.text)
-                  80005ac8    00000038                           : xdclass.obj (.text)
-                  80005b00    00000030                           : frexp.obj (.text)
-                  80005b30    0000002c                           : memccpy.obj (.text)
-                  80005b5c    00000028                           : strchr.obj (.text)
-                  80005b84    00000024                           : _lock.obj (.text)
-                  80005ba8    0000001c                           : strlen.obj (.text)
-                  80005bc4    00000014                           : copy_decompress_none.obj (.text:decompress:none)
-                  80005bd8    00000010                           : copy_zero_init.obj (.text:decompress:ZI)
-                  80005be8    00000008                           : copy_decompress_rle.obj (.text:decompress:rle24)
-                  80005bf0    00000004                           : i_div0.obj (.text)
+                  80003ccc    000002d8     lcd_I2C.obj (.text)
+                  80003fa4    000002b8     rtsv7A8_A_le_eabi.lib : ull_div32.obj (.text)
+                  8000425c    00000214                           : fd_add32.obj (.text)
+                  80004470    000001a8                           : xdscale.obj (.text)
+                  80004618    00000190                           : fd_div32.obj (.text)
+                  800047a8    00000180                           : memcpy32.obj (.text)
+                  80004928    00000160                           : xdnorm.obj (.text)
+                  80004a88    00000128                           : fd_mul32.obj (.text)
+                  80004bb0    00000114                           : i_div32.obj (.text)
+                  80004cc4    0000010c     system.lib : exceptionhandler.obj (.text)
+                  80004dd0    00000104     rtsv7A8_A_le_eabi.lib : snprintf.obj (.text)
+                  80004ed4    000000f0     platform.lib : sysdelay.obj (.text)
+                  80004fc4    000000f0     rtsv7A8_A_le_eabi.lib : u_div32.obj (.text)
+                  800050b4    000000e0                           : fd_cmp32.obj (.text:__aeabi_cdcmple)
+                  80005194    000000e0                           : fd_cmp32.obj (.text:__aeabi_cdrcmple)
+                  80005274    000000b8                           : xdunscal.obj (.text)
+                  8000532c    000000b0                           : memset32.obj (.text)
+                  800053dc    000000a4                           : autoinit.obj (.text)
+                  80005480    000000a0                           : copy_decompress_rle.obj (.text)
+                  80005520    00000084                           : atoi.obj (.text)
+                  800055a4    00000084                           : cpy_tbl.obj (.text)
+                  80005628    00000084     system.lib : startup.obj (.text)
+                  800056ac    00000080     rtsv7A8_A_le_eabi.lib : ltoa.obj (.text)
+                  8000572c    00000068                           : ldexp.obj (.text)
+                  80005794    00000064                           : signal.obj (.text)
+                  800057f8    00000060     system.lib : cpu.obj (.text)
+                  80005858    0000005c     rtsv7A8_A_le_eabi.lib : fd_toi32.obj (.text)
+                  800058b4    00000058                           : feraiseexcept.obj (.text)
+                  8000590c    0000004c     main.obj (.text)
+                  80005958    0000004c     rtsv7A8_A_le_eabi.lib : raise.obj (.text)
+                  800059a4    0000004c     utils.lib : delay.obj (.text)
+                  800059f0    00000044     rtsv7A8_A_le_eabi.lib : xferaise.obj (.text)
+                  80005a34    0000003c                           : i_tofd32.obj (.text)
+                  80005a70    00000038                           : xdclass.obj (.text)
+                  80005aa8    00000030                           : frexp.obj (.text)
+                  80005ad8    0000002c                           : memccpy.obj (.text)
+                  80005b04    00000028                           : strchr.obj (.text)
+                  80005b2c    00000024                           : _lock.obj (.text)
+                  80005b50    0000001c                           : strlen.obj (.text)
+                  80005b6c    00000014                           : copy_decompress_none.obj (.text:decompress:none)
+                  80005b80    00000010                           : copy_zero_init.obj (.text:decompress:ZI)
+                  80005b90    00000008                           : copy_decompress_rle.obj (.text:decompress:rle24)
+                  80005b98    00000004                           : i_div0.obj (.text)
 
-.bss       0    80005bf4    00000200     UNINITIALIZED
-                  80005bf4    00000200     system.lib : interrupt.obj (.bss:fnRAMVectors)
+.bss       0    80005b9c    00000200     UNINITIALIZED
+                  80005b9c    00000200     system.lib : interrupt.obj (.bss:fnRAMVectors)
 
 .TI.noinit 
-*          0    80005bf4    00000000     UNINITIALIZED
+*          0    80005b9c    00000000     UNINITIALIZED
 
-.data      0    80005df8    00000148     UNINITIALIZED
-                  80005df8    000000b0     rtsv7A8_A_le_eabi.lib : signal.obj (.data:sigtable)
-                  80005ea8    00000080                           : xvalues.obj (.data)
-                  80005f28    00000008                           : _lock.obj (.data)
-                  80005f30    00000008                           : feraiseexcept.obj (.data)
-                  80005f38    00000004     platform.lib : sysdelay.obj (.data)
-                  80005f3c    00000004     rtsv7A8_A_le_eabi.lib : errno.obj (.data)
+.data      0    80005da0    00000148     UNINITIALIZED
+                  80005da0    000000b0     rtsv7A8_A_le_eabi.lib : signal.obj (.data:sigtable)
+                  80005e50    00000080                           : xvalues.obj (.data)
+                  80005ed0    00000008                           : _lock.obj (.data)
+                  80005ed8    00000008                           : feraiseexcept.obj (.data)
+                  80005ee0    00000004     platform.lib : sysdelay.obj (.data)
+                  80005ee4    00000004     rtsv7A8_A_le_eabi.lib : errno.obj (.data)
 
 .TI.persistent 
-*          0    80005df8    00000000     UNINITIALIZED
+*          0    80005da0    00000000     UNINITIALIZED
 
-.const     0    80005f40    00000140     
-                  80005f40    00000101     rtsv7A8_A_le_eabi.lib : ctype.obj (.const:.string:_ctypes_)
-                  80006041    00000003     lcd_I2C.obj (.const:.string)
-                  80006044    00000038     system.lib : startup.obj (.const:vecTbl)
-                  8000607c    00000004                : startup.obj (.const)
+.const     0    80005ee8    00000140     
+                  80005ee8    00000101     rtsv7A8_A_le_eabi.lib : ctype.obj (.const:.string:_ctypes_)
+                  80005fe9    00000003     lcd_I2C.obj (.const:.string)
+                  80005fec    00000038     system.lib : startup.obj (.const:vecTbl)
+                  80006024    00000004                : startup.obj (.const)
 
 .stack     0    87fffff0    00000008     UNINITIALIZED
                   87fffff0    00000008     --HOLE--
 
-.cinit     0    80006080    00000068     
-                  80006080    00000044     (.cinit..data.load) [load image, compression = rle]
-                  800060c4    0000000c     (__TI_handler_table)
-                  800060d0    00000008     (.cinit..bss.load) [load image, compression = zero_init]
-                  800060d8    00000010     (__TI_cinit_table)
+.cinit     0    80006028    00000068     
+                  80006028    00000044     (.cinit..data.load) [load image, compression = rle]
+                  8000606c    0000000c     (__TI_handler_table)
+                  80006078    00000008     (.cinit..bss.load) [load image, compression = zero_init]
+                  80006080    00000010     (__TI_cinit_table)
 
 
 LINKER GENERATED COPY TABLES
 
-__TI_cinit_table @ 800060d8 records: 2, size/record: 8, table size: 16
-	.data: load addr=80006080, load size=00000044 bytes, run addr=80005df8, run size=00000148 bytes, compression=rle
-	.bss: load addr=800060d0, load size=00000008 bytes, run addr=80005bf4, run size=00000200 bytes, compression=zero_init
+__TI_cinit_table @ 80006080 records: 2, size/record: 8, table size: 16
+	.data: load addr=80006028, load size=00000044 bytes, run addr=80005da0, run size=00000148 bytes, compression=rle
+	.bss: load addr=80006078, load size=00000008 bytes, run addr=80005b9c, run size=00000200 bytes, compression=zero_init
 
 
 LINKER GENERATED HANDLER TABLE
 
-__TI_handler_table @ 800060c4 records: 3, size/record: 4, table size: 12
+__TI_handler_table @ 8000606c records: 3, size/record: 4, table size: 12
 	index: 0, handler: __TI_decompress_rle24
 	index: 1, handler: __TI_decompress_none
 	index: 2, handler: __TI_zero_init
@@ -147,7 +147,7 @@ callee name               trampoline name
    callee addr  tramp addr   call addr  call info
 --------------  -----------  ---------  ----------------
 __TI_auto_init            $Tramp$AA$S$$__TI_auto_init
-   80005434     800000c8     800000a0   system.lib : init.obj (.text:Entry)
+   800053dc     800000c8     800000a0   system.lib : init.obj (.text:Entry)
 
 [1 trampolines]
 [1 trampoline calls]
@@ -157,8 +157,8 @@ GLOBAL SYMBOLS: SORTED ALPHABETICALLY BY Name
 
 address   name                         
 -------   ----                         
-8000607c  AM335X_VECTOR_BASE           
-80004e10  AbortHandler                 
+80006024  AM335X_VECTOR_BASE           
+80004db8  AbortHandler                 
 80003888  CP15AuxControlFeatureDisable 
 80003874  CP15AuxControlFeatureEnable  
 8000381c  CP15BranchPredictionDisable  
@@ -186,13 +186,13 @@ address   name
 800037b0  CP15Ttb0Set                  
 80003864  CP15TtbCtlTtb0Config         
 800037f4  CP15VectorBaseAddrSet        
-8000586c  CPUAbortHandler              
-80005850  CPUSwitchToPrivilegedMode    
-80005858  CPUSwitchToUserMode          
-80005890  CPUfiqd                      
-800058a0  CPUfiqe                      
-80005870  CPUirqd                      
-80005880  CPUirqe                      
+80005814  CPUAbortHandler              
+800057f8  CPUSwitchToPrivilegedMode    
+80005800  CPUSwitchToUserMode          
+80005838  CPUfiqd                      
+80005848  CPUfiqe                      
+80005818  CPUirqd                      
+80005828  CPUirqe                      
 80002cb4  DMTimer1msModuleClkConfig    
 8000279c  DMTimer2ModuleClkConfig      
 80002610  DMTimer3ModuleClkConfig      
@@ -225,9 +225,9 @@ address   name
 800031f8  DMTimerResetConfigure        
 800031a8  DMTimerTriggerSet            
 80003414  DMTimerWritePostedStatusGet  
-800059fc  DelayTimerSetup              
+800059a4  DelayTimerSetup              
 80000000  Entry                        
-80004e0c  FIQHandler                   
+80004db4  FIQHandler                   
 80003a78  I2C0ModuleClkConfig          
 80003910  I2C1ModuleClkConfig          
 80002078  I2CActiveOwnAddressGet       
@@ -276,107 +276,107 @@ address   name
 8000248c  I2CSystemStatusGet           
 80002400  I2CWakeUpDisable             
 80002374  I2CWakeUpEnable              
-80004d60  IRQHandler                   
-80005a3c  IsTimerElapsed               
+80004d08  IRQHandler                   
+800059e4  IsTimerElapsed               
 UNDEFED   SHT$$INIT_ARRAY$$Base        
 UNDEFED   SHT$$INIT_ARRAY$$Limit       
-80004d38  SVC_Handler                  
-80005a1c  StartTimer                   
-80005a30  StopTimer                    
-80004f2c  SysDelayTimerSetup           
-80004fe0  SysIsTimerElapsed            
-80004fa4  SysStartTimer                
-80004fd0  SysStopTimer                 
-80004f44  Sysdelay                     
-80004e10  UndefInstHandler             
-80005ac8  _Dclass                      
-80005ea8  _Denorm                      
-80004980  _Dnorm                       
-800044c8  _Dscale                      
-800052cc  _Dunscale                    
-80005eb8  _Eps                         
-80005f3c  _Errno                       
-80005f30  _Fenv                        
-80005a48  _Feraise                     
-80005ec8  _Hugeval                     
-80005ed8  _Inf                         
-80005ee8  _Nan                         
-80005f08  _Rteps                       
-80005ef8  _Snan                        
-80005f34  _Tls_setup__Fenv             
-80005f18  _Xbig                        
-80005f20  _Zero                        
+80004ce0  SVC_Handler                  
+800059c4  StartTimer                   
+800059d8  StopTimer                    
+80004ed4  SysDelayTimerSetup           
+80004f88  SysIsTimerElapsed            
+80004f4c  SysStartTimer                
+80004f78  SysStopTimer                 
+80004eec  Sysdelay                     
+80004db8  UndefInstHandler             
+80005a70  _Dclass                      
+80005e50  _Denorm                      
+80004928  _Dnorm                       
+80004470  _Dscale                      
+80005274  _Dunscale                    
+80005e60  _Eps                         
+80005ee4  _Errno                       
+80005ed8  _Fenv                        
+800059f0  _Feraise                     
+80005e70  _Hugeval                     
+80005e80  _Inf                         
+80005e90  _Nan                         
+80005eb0  _Rteps                       
+80005ea0  _Snan                        
+80005edc  _Tls_setup__Fenv             
+80005ec0  _Xbig                        
+80005ec8  _Zero                        
 87fffff8  __STACK_END                  
 00000008  __STACK_SIZE                 
-800060d8  __TI_CINIT_Base              
-800060e8  __TI_CINIT_Limit             
-800060c4  __TI_Handler_Table_Base      
-800060d0  __TI_Handler_Table_Limit     
-80005434  __TI_auto_init               
-80005bc4  __TI_decompress_none         
-80005be8  __TI_decompress_rle24        
+80006080  __TI_CINIT_Base              
+80006090  __TI_CINIT_Limit             
+8000606c  __TI_Handler_Table_Base      
+80006078  __TI_Handler_Table_Limit     
+800053dc  __TI_auto_init               
+80005b6c  __TI_decompress_none         
+80005b90  __TI_decompress_rle24        
 80001644  __TI_printfi                 
-80006080  __TI_static_base__           
-80005bd8  __TI_zero_init               
-8000510c  __aeabi_cdcmpeq              
-8000510c  __aeabi_cdcmple              
-800051ec  __aeabi_cdrcmple             
-800058b0  __aeabi_d2iz                 
-800042c0  __aeabi_dadd                 
-80004670  __aeabi_ddiv                 
-80004ae0  __aeabi_dmul                 
-800042b4  __aeabi_dsub                 
-80005a8c  __aeabi_i2d                  
-80004c08  __aeabi_idiv                 
-80005bf0  __aeabi_idiv0                
-80004c08  __aeabi_idivmod              
-80005384  __aeabi_memclr               
-80005384  __aeabi_memclr4              
-80005384  __aeabi_memclr8              
-80004800  __aeabi_memcpy               
-80004800  __aeabi_memcpy4              
-80004800  __aeabi_memcpy8              
-80005388  __aeabi_memset               
-80005388  __aeabi_memset4              
-80005388  __aeabi_memset8              
-8000501c  __aeabi_uidiv                
-8000501c  __aeabi_uidivmod             
-80003ffc  __aeabi_uldivmod             
+80006028  __TI_static_base__           
+80005b80  __TI_zero_init               
+800050b4  __aeabi_cdcmpeq              
+800050b4  __aeabi_cdcmple              
+80005194  __aeabi_cdrcmple             
+80005858  __aeabi_d2iz                 
+80004268  __aeabi_dadd                 
+80004618  __aeabi_ddiv                 
+80004a88  __aeabi_dmul                 
+8000425c  __aeabi_dsub                 
+80005a34  __aeabi_i2d                  
+80004bb0  __aeabi_idiv                 
+80005b98  __aeabi_idiv0                
+80004bb0  __aeabi_idivmod              
+8000532c  __aeabi_memclr               
+8000532c  __aeabi_memclr4              
+8000532c  __aeabi_memclr8              
+800047a8  __aeabi_memcpy               
+800047a8  __aeabi_memcpy4              
+800047a8  __aeabi_memcpy8              
+80005330  __aeabi_memset               
+80005330  __aeabi_memset4              
+80005330  __aeabi_memset8              
+80004fc4  __aeabi_uidiv                
+80004fc4  __aeabi_uidivmod             
+80003fa4  __aeabi_uldivmod             
 ffffffff  __binit__                    
 ffffffff  __c_args__                   
 87fffff0  __stack                      
-80005f40  _ctypes_                     
-80005f28  _lock                        
-80005b9c  _nop                         
-80005b90  _register_lock               
-80005b84  _register_unlock             
-80005f2c  _unlock                      
-80005578  atoi                         
+80005ee8  _ctypes_                     
+80005ed0  _lock                        
+80005b44  _nop                         
+80005b38  _register_lock               
+80005b2c  _register_unlock             
+80005ed4  _unlock                      
+80005520  atoi                         
 ffffffff  binit                        
-80005df4  bss_end                      
-80005bf4  bss_start                    
+80005d9c  bss_end                      
+80005b9c  bss_start                    
 80003d1c  clearDisplay                 
-800055fc  copy_in                      
-80005a08  delay                        
-8000590c  feraiseexcept                
-80005bf4  fnRAMVectors                 
-80005b00  frexp                        
-80005784  ldexp                        
-80005704  ltoa                         
-80005964  main                         
-80005b30  memccpy                      
-80004800  memcpy                       
-80005394  memset                       
-800059b0  raise                        
-80003f88  runDelay                     
+800055a4  copy_in                      
+800059b0  delay                        
+800058b4  feraiseexcept                
+80005b9c  fnRAMVectors                 
+80005aa8  frexp                        
+8000572c  ldexp                        
+800056ac  ltoa                         
+8000590c  main                         
+80005ad8  memccpy                      
+800047a8  memcpy                       
+8000533c  memset                       
+80005958  raise                        
+80003f30  runDelay                     
 80003d48  sendMsg                      
 80003ccc  setupLCD_I2C                 
-800057ec  signal                       
-80004e28  snprintf                     
-80005680  start_boot                   
-80005b5c  strchr                       
-80005ba8  strlen                       
-80003ef4  transmit_I2C                 
+80005794  signal                       
+80004dd0  snprintf                     
+80005628  start_boot                   
+80005b04  strchr                       
+80005b50  strlen                       
+80003e9c  transmit_I2C                 
 80003da0  turnOnLCD                    
 
 
@@ -498,106 +498,106 @@ address   name
 80003d1c  clearDisplay                 
 80003d48  sendMsg                      
 80003da0  turnOnLCD                    
-80003ef4  transmit_I2C                 
-80003f88  runDelay                     
-80003ffc  __aeabi_uldivmod             
-800042b4  __aeabi_dsub                 
-800042c0  __aeabi_dadd                 
-800044c8  _Dscale                      
-80004670  __aeabi_ddiv                 
-80004800  __aeabi_memcpy               
-80004800  __aeabi_memcpy4              
-80004800  __aeabi_memcpy8              
-80004800  memcpy                       
-80004980  _Dnorm                       
-80004ae0  __aeabi_dmul                 
-80004c08  __aeabi_idiv                 
-80004c08  __aeabi_idivmod              
-80004d38  SVC_Handler                  
-80004d60  IRQHandler                   
-80004e0c  FIQHandler                   
-80004e10  AbortHandler                 
-80004e10  UndefInstHandler             
-80004e28  snprintf                     
-80004f2c  SysDelayTimerSetup           
-80004f44  Sysdelay                     
-80004fa4  SysStartTimer                
-80004fd0  SysStopTimer                 
-80004fe0  SysIsTimerElapsed            
-8000501c  __aeabi_uidiv                
-8000501c  __aeabi_uidivmod             
-8000510c  __aeabi_cdcmpeq              
-8000510c  __aeabi_cdcmple              
-800051ec  __aeabi_cdrcmple             
-800052cc  _Dunscale                    
-80005384  __aeabi_memclr               
-80005384  __aeabi_memclr4              
-80005384  __aeabi_memclr8              
-80005388  __aeabi_memset               
-80005388  __aeabi_memset4              
-80005388  __aeabi_memset8              
-80005394  memset                       
-80005434  __TI_auto_init               
-80005578  atoi                         
-800055fc  copy_in                      
-80005680  start_boot                   
-80005704  ltoa                         
-80005784  ldexp                        
-800057ec  signal                       
-80005850  CPUSwitchToPrivilegedMode    
-80005858  CPUSwitchToUserMode          
-8000586c  CPUAbortHandler              
-80005870  CPUirqd                      
-80005880  CPUirqe                      
-80005890  CPUfiqd                      
-800058a0  CPUfiqe                      
-800058b0  __aeabi_d2iz                 
-8000590c  feraiseexcept                
-80005964  main                         
-800059b0  raise                        
-800059fc  DelayTimerSetup              
-80005a08  delay                        
-80005a1c  StartTimer                   
-80005a30  StopTimer                    
-80005a3c  IsTimerElapsed               
-80005a48  _Feraise                     
-80005a8c  __aeabi_i2d                  
-80005ac8  _Dclass                      
-80005b00  frexp                        
-80005b30  memccpy                      
-80005b5c  strchr                       
-80005b84  _register_unlock             
-80005b90  _register_lock               
-80005b9c  _nop                         
-80005ba8  strlen                       
-80005bc4  __TI_decompress_none         
-80005bd8  __TI_zero_init               
-80005be8  __TI_decompress_rle24        
-80005bf0  __aeabi_idiv0                
-80005bf4  bss_start                    
-80005bf4  fnRAMVectors                 
-80005df4  bss_end                      
-80005ea8  _Denorm                      
-80005eb8  _Eps                         
-80005ec8  _Hugeval                     
-80005ed8  _Inf                         
-80005ee8  _Nan                         
-80005ef8  _Snan                        
-80005f08  _Rteps                       
-80005f18  _Xbig                        
-80005f20  _Zero                        
-80005f28  _lock                        
-80005f2c  _unlock                      
-80005f30  _Fenv                        
-80005f34  _Tls_setup__Fenv             
-80005f3c  _Errno                       
-80005f40  _ctypes_                     
-8000607c  AM335X_VECTOR_BASE           
-80006080  __TI_static_base__           
-800060c4  __TI_Handler_Table_Base      
-800060d0  __TI_Handler_Table_Limit     
-800060d8  __TI_CINIT_Base              
-800060e8  __TI_CINIT_Limit             
+80003e9c  transmit_I2C                 
+80003f30  runDelay                     
+80003fa4  __aeabi_uldivmod             
+8000425c  __aeabi_dsub                 
+80004268  __aeabi_dadd                 
+80004470  _Dscale                      
+80004618  __aeabi_ddiv                 
+800047a8  __aeabi_memcpy               
+800047a8  __aeabi_memcpy4              
+800047a8  __aeabi_memcpy8              
+800047a8  memcpy                       
+80004928  _Dnorm                       
+80004a88  __aeabi_dmul                 
+80004bb0  __aeabi_idiv                 
+80004bb0  __aeabi_idivmod              
+80004ce0  SVC_Handler                  
+80004d08  IRQHandler                   
+80004db4  FIQHandler                   
+80004db8  AbortHandler                 
+80004db8  UndefInstHandler             
+80004dd0  snprintf                     
+80004ed4  SysDelayTimerSetup           
+80004eec  Sysdelay                     
+80004f4c  SysStartTimer                
+80004f78  SysStopTimer                 
+80004f88  SysIsTimerElapsed            
+80004fc4  __aeabi_uidiv                
+80004fc4  __aeabi_uidivmod             
+800050b4  __aeabi_cdcmpeq              
+800050b4  __aeabi_cdcmple              
+80005194  __aeabi_cdrcmple             
+80005274  _Dunscale                    
+8000532c  __aeabi_memclr               
+8000532c  __aeabi_memclr4              
+8000532c  __aeabi_memclr8              
+80005330  __aeabi_memset               
+80005330  __aeabi_memset4              
+80005330  __aeabi_memset8              
+8000533c  memset                       
+800053dc  __TI_auto_init               
+80005520  atoi                         
+800055a4  copy_in                      
+80005628  start_boot                   
+800056ac  ltoa                         
+8000572c  ldexp                        
+80005794  signal                       
+800057f8  CPUSwitchToPrivilegedMode    
+80005800  CPUSwitchToUserMode          
+80005814  CPUAbortHandler              
+80005818  CPUirqd                      
+80005828  CPUirqe                      
+80005838  CPUfiqd                      
+80005848  CPUfiqe                      
+80005858  __aeabi_d2iz                 
+800058b4  feraiseexcept                
+8000590c  main                         
+80005958  raise                        
+800059a4  DelayTimerSetup              
+800059b0  delay                        
+800059c4  StartTimer                   
+800059d8  StopTimer                    
+800059e4  IsTimerElapsed               
+800059f0  _Feraise                     
+80005a34  __aeabi_i2d                  
+80005a70  _Dclass                      
+80005aa8  frexp                        
+80005ad8  memccpy                      
+80005b04  strchr                       
+80005b2c  _register_unlock             
+80005b38  _register_lock               
+80005b44  _nop                         
+80005b50  strlen                       
+80005b6c  __TI_decompress_none         
+80005b80  __TI_zero_init               
+80005b90  __TI_decompress_rle24        
+80005b98  __aeabi_idiv0                
+80005b9c  bss_start                    
+80005b9c  fnRAMVectors                 
+80005d9c  bss_end                      
+80005e50  _Denorm                      
+80005e60  _Eps                         
+80005e70  _Hugeval                     
+80005e80  _Inf                         
+80005e90  _Nan                         
+80005ea0  _Snan                        
+80005eb0  _Rteps                       
+80005ec0  _Xbig                        
+80005ec8  _Zero                        
+80005ed0  _lock                        
+80005ed4  _unlock                      
+80005ed8  _Fenv                        
+80005edc  _Tls_setup__Fenv             
+80005ee4  _Errno                       
+80005ee8  _ctypes_                     
+80006024  AM335X_VECTOR_BASE           
+80006028  __TI_static_base__           
+8000606c  __TI_Handler_Table_Base      
+80006078  __TI_Handler_Table_Limit     
+80006080  __TI_CINIT_Base              
+80006090  __TI_CINIT_Limit             
 87fffff0  __stack                      
 87fffff8  __STACK_END                  
 ffffffff  __binit__                    

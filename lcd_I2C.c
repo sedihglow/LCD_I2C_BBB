@@ -8,11 +8,6 @@
 
 #include "lcd_I2C.h"
 
-#undef DELAY_USE_INTERRUPTS
-
-#define DISP_ON_LEN 2
-#define CMD_DISP_ON "\x00\x0C"
-
 void setupLCD_I2C(uint32_t baseAddr)
 {
     I2C1ModuleClkConfig(); // set with system clock
@@ -39,65 +34,49 @@ void setupLCD_I2C(uint32_t baseAddr)
     I2CMasterEnable(baseAddr);
 }//end setupI2C
 
-void clearDisplay(uint32_t baseAddr){
-	char clearCmd[] = {SLAVE_ADDR_I2C, 0x00, 0x01};
-	transmit_I2C(baseAddr, clearCmd, 3);
 
-}
-
-
-void sendMsg(uint32_t baseAddr, char *msg)
-{
-	char dataToSlave[MSG_LEN_MAX] = {'\0'};
-	dataToSlave[0] = 0x40;
-	snprintf(dataToSlave+1, MSG_LEN_MAX-1, msg);
-
-	transmit_I2C(baseAddr, dataToSlave, strlen(dataToSlave));
-}// end sendMsg
 
 void turnOnLCD(uint32_t baseAddr)
 {
-	char dispCmd[20] = {'\0'};
+#define CMD_LEN 3
+	// see LCD commands in LCD_I2C.h for command details
+	uint8_t dispCmd[MSG_LEN_MAX] = {'\0'};
 
-	dispCmd[0] = SLAVE_ADDR_I2C;
-	dispCmd[1] = 0x00;
+	//dispCmd[0] = SLAVE_ADDR_I2C; // no need to send since only 1 slave
+	dispCmd[0] = LCD_CMD;
 
-	dispCmd[2] = 0x38;
-	transmit_I2C(baseAddr, dispCmd, 3);
-	delay(10);
+	dispCmd[1] = FUNC_SET;
+	transmit_I2C(baseAddr, dispCmd, CMD_LEN);
+	runDelay(10);
 
-	dispCmd[2] = 0x39;
-	transmit_I2C(baseAddr, dispCmd, 3);
-	delay(10);
+	dispCmd[1] = SET_BIAS;
+	transmit_I2C(baseAddr, dispCmd, CMD_LEN);
 
-	dispCmd[2] = 0x14;
-	transmit_I2C(baseAddr, dispCmd, 3);
-	delay(10);
+	dispCmd[1] = CONTRAST_SET;
+	transmit_I2C(baseAddr, dispCmd, CMD_LEN);
 
-	dispCmd[2] = 0x78;
-	transmit_I2C(baseAddr, dispCmd, 3);
-	delay(10);
+	dispCmd[1] = PWR_ICON_HC;
+	transmit_I2C(baseAddr, dispCmd, CMD_LEN);
 
-	dispCmd[2] = 0x5E;
-	transmit_I2C(baseAddr, dispCmd, 3);
-	delay(10);
+	dispCmd[1] = FOLLOWER_CTL;
+	transmit_I2C(baseAddr, dispCmd, CMD_LEN);
 
-	dispCmd[2] = 0x6D;
-	transmit_I2C(baseAddr, dispCmd, 3);
-	delay(10);
+	dispCmd[1] = DISP_EN;
+	transmit_I2C(baseAddr, dispCmd, CMD_LEN);
 
-	dispCmd[2] = 0x0F;
-	transmit_I2C(baseAddr, dispCmd, 3);
-	delay(10);
+	dispCmd[1] = CLR_SCRN;
+	transmit_I2C(baseAddr, dispCmd, CMD_LEN);
 
-	dispCmd[2] = 0x01;
-	transmit_I2C(baseAddr, dispCmd, 3);
-	delay(10);
-
-	dispCmd[2] = 0x06;
-	transmit_I2C(baseAddr, dispCmd, 3);
-	delay(10);
+	dispCmd[1] = ENTRY_SET;
+	transmit_I2C(baseAddr, dispCmd, CMD_LEN);
+	runDelay(10);
+#undef CMD_LEN
 }// end turnOnLCD
+
+void clearDisplay(uint32_t baseAddr){
+	uint8_t clearCmd[] = {SLAVE_ADDR_I2C, LCD_CMD, CLR_SCRN};
+	transmit_I2C(baseAddr, clearCmd, 3);
+}//end clearDisplay
 
 void transmit_I2C(uint32_t baseAddr, uint8_t *toSlave, uint32_t transLen)
 {
@@ -114,11 +93,15 @@ void transmit_I2C(uint32_t baseAddr, uint8_t *toSlave, uint32_t transLen)
     */
     I2CMasterControl(baseAddr, I2C_CFG_MST_TX | I2C_CFG_STOP | I2C_CFG_7BIT_SLAVE_ADDR);
 
-    /* Generated Start Condition over I2C bus */
-    I2CMasterStart(baseAddr);
+    // TODO: BUSY BIT IS ALWAYS BUSY, even before sending anything.??
+    // wait for busy to not be busy
+    //while(!(I2CMasterIntRawStatus(baseAddr) & BB_BIT));
+
+	/* Generated Start Condition over I2C bus */
+	I2CMasterStart(baseAddr);
 
     do{
-    	if(I2CMasterIntRawStatus(baseAddr) & 0x10){
+    	if(I2CMasterIntRawStatus(baseAddr) & XRDY_BIT){
     		/* Put data to data transmit register of i2c */
     		I2CMasterDataPut(baseAddr, toSlave[i]);
     		runDelay(10);
@@ -130,16 +113,28 @@ void transmit_I2C(uint32_t baseAddr, uint8_t *toSlave, uint32_t transLen)
     I2CMasterStop(baseAddr);
 }// end setTransmit_I2C
 
+void sendMsg(uint32_t baseAddr, uint8_t *msg)
+{
+	uint8_t dataToSlave[MSG_LEN_MAX] = {'\0'};
+	dataToSlave[0] = LCD_DATA;
+	snprintf(dataToSlave+1, MSG_LEN_MAX-1, msg); // append msg to dataToSlave
+
+	// TODO: if i include the slave address as dataToSlave[0], LCD crashes..why
+	transmit_I2C(baseAddr, dataToSlave, strlen(dataToSlave));
+}// end sendMsg
+
 void runDelay(uint32_t milliSec)
 {
     while(milliSec != 0)
     {
+        // set up timer
         DMTimerCounterSet(SOC_DMTIMER_7_REGS, 0);
         DMTimerEnable(SOC_DMTIMER_7_REGS);
+        // wait for time 1ms to process
         while(DMTimerCounterGet(SOC_DMTIMER_7_REGS) < TIMER_1MS_COUNT);
+        // disable the timer
         DMTimerDisable(SOC_DMTIMER_7_REGS);
-        milliSec--;
+        milliSec--; // go to next milliSec
     }
 }// end runDelay
-
-/******** EOF ******/
+/**************** EOF *************/
