@@ -1,7 +1,7 @@
 ******************************************************************************
                   TI ARM Linker PC v5.2.5                      
 ******************************************************************************
->> Linked Fri Mar 10 12:07:23 2017
+>> Linked Fri Mar 10 12:26:44 2017
 
 OUTPUT FILE NAME:   <I2C_LCD.out>
 ENTRY POINT SYMBOL: "Entry"  address: 80000000
@@ -355,7 +355,7 @@ ffffffff  __c_args__
 ffffffff  binit                        
 80005d9c  bss_end                      
 80005b9c  bss_start                    
-80003d1c  clearDisplay                 
+80003e18  clearDisplay                 
 800055a4  copy_in                      
 800059b0  delay                        
 800058b4  feraiseexcept                
@@ -369,15 +369,15 @@ ffffffff  binit
 8000533c  memset                       
 80005958  raise                        
 80003f30  runDelay                     
-80003d48  sendMsg                      
+80003ed8  sendMsg                      
 80003ccc  setupLCD_I2C                 
 80005794  signal                       
 80004dd0  snprintf                     
 80005628  start_boot                   
 80005b04  strchr                       
 80005b50  strlen                       
-80003e9c  transmit_I2C                 
-80003da0  turnOnLCD                    
+80003e44  transmit_I2C                 
+80003d1c  turnOnLCD                    
 
 
 GLOBAL SYMBOLS: SORTED BY Symbol Address 
@@ -495,10 +495,10 @@ address   name
 80003910  I2C1ModuleClkConfig          
 80003a78  I2C0ModuleClkConfig          
 80003ccc  setupLCD_I2C                 
-80003d1c  clearDisplay                 
-80003d48  sendMsg                      
-80003da0  turnOnLCD                    
-80003e9c  transmit_I2C                 
+80003d1c  turnOnLCD                    
+80003e18  clearDisplay                 
+80003e44  transmit_I2C                 
+80003ed8  sendMsg                      
 80003f30  runDelay                     
 80003fa4  __aeabi_uldivmod             
 8000425c  __aeabi_dsub                 

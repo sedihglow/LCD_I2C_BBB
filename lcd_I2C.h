@@ -55,7 +55,6 @@
 #define FUNC_SET     0x39 // set to 8bit interface data, 1 line, default height,
                           // 01 instruction table
 
-
 /* Sets up the I2C interface so it can be used to communicate to the LCD screen.
  * The LCD screen is connected to I2C1
  */

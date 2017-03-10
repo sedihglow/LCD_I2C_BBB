@@ -13,7 +13,7 @@
 
 int main(void)
 {
-    DelayTimerSetup();
+    DelayTimerSetup();// sets timer7 clock and settings used for runDelay
 
     setupLCD_I2C(SOC_I2C_1_REGS); // send base address of I2C1 for setup
 
