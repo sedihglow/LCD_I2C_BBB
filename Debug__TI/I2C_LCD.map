@@ -1,7 +1,7 @@
 ******************************************************************************
                   TI ARM Linker PC v5.2.5                      
 ******************************************************************************
->> Linked Mon Mar 13 12:33:59 2017
+>> Linked Mon Mar 13 12:50:04 2017
 
 OUTPUT FILE NAME:   <I2C_LCD.out>
 ENTRY POINT SYMBOL: "Entry"  address: 80000000
@@ -11,24 +11,24 @@ MEMORY CONFIGURATION
 
          name            origin    length      used     unused   attr    fill
 ----------------------  --------  ---------  --------  --------  ----  --------
-  DDR0                  80000000   40000000  00003658  3fffc9a8  RWIX
+  DDR0                  80000000   40000000  00003688  3fffc978  RWIX
 
 
 SEGMENT ALLOCATION MAP
 
 run origin  load origin   length   init length attrs members
 ----------  ----------- ---------- ----------- ----- -------
-80000000    80000000    000033b4   000033b4    r-x
+80000000    80000000    000033e4   000033e4    r-x
   80000000    80000000    000000d0   000000d0    r-x .text:Entry
-  800000d0    800000d0    000032e4   000032e4    r-x .text
-800033b4    800033b4    00000220   00000000    rw-
-  800033b4    800033b4    00000220   00000000    rw- .bss
-800035d4    800035d4    0000003c   0000003c    r--
-  800035d4    800035d4    0000003c   0000003c    r-- .const
-80003610    80003610    00000008   00000000    rw-
-  80003610    80003610    00000008   00000000    rw- .data
-80003618    80003618    00000038   00000038    r--
-  80003618    80003618    00000038   00000038    r-- .cinit
+  800000d0    800000d0    00003314   00003314    r-x .text
+800033e4    800033e4    00000208   00000000    rw-
+  800033e4    800033e4    00000208   00000000    rw- .bss
+800035ec    800035ec    0000003c   0000003c    r--
+  800035ec    800035ec    0000003c   0000003c    r-- .const
+80003628    80003628    00000020   00000000    rw-
+  80003628    80003628    00000020   00000000    rw- .data
+80003648    80003648    00000038   00000038    r--
+  80003648    80003648    00000038   00000038    r-- .cinit
 87fffff0    87fffff0    00000008   00000000    rw-
   87fffff0    87fffff0    00000008   00000000    rw- .stack
 
@@ -43,73 +43,71 @@ section   page    origin      length       input sections
                   80000000    000000c8     system.lib : init.obj (.text:Entry)
                   800000c8    00000008     rtsv7A8_A_le_eabi.lib : autoinit.obj (.tramp.__TI_auto_init.1)
 
-.text      0    800000d0    000032e4     
+.text      0    800000d0    00003314     
                   800000d0    00000ad0     drivers.lib : hsi2c.obj (.text)
                   80000ba0    00000780     platform.lib : dmtimer.obj (.text)
                   80001320    0000069c     drivers.lib : dmtimer.obj (.text)
-                  800019bc    000004a4     int_LCD_I2C.obj (.text)
-                  80001e60    00000488     system.lib : cp15.obj (.text)
-                  800022e8    00000418     platform.lib : hsi2c.obj (.text)
-                  80002700    000003e4     system.lib : interrupt.obj (.text)
-                  80002ae4    00000180     rtsv7A8_A_le_eabi.lib : memcpy32.obj (.text)
-                  80002c64    00000170     platform.lib : sysdelay.obj (.text)
-                  80002dd4    0000010c     system.lib : exceptionhandler.obj (.text)
-                  80002ee0    000000f0     rtsv7A8_A_le_eabi.lib : u_div32.obj (.text)
-                  80002fd0    000000b0                           : memset32.obj (.text)
-                  80003080    000000a4                           : autoinit.obj (.text)
-                  80003124    000000a0                           : copy_decompress_rle.obj (.text)
-                  800031c4    00000084                           : cpy_tbl.obj (.text)
-                  80003248    00000084     system.lib : startup.obj (.text)
-                  800032cc    00000060                : cpu.obj (.text)
-                  8000332c    0000004c     utils.lib : delay.obj (.text)
-                  80003378    00000014     rtsv7A8_A_le_eabi.lib : copy_decompress_none.obj (.text:decompress:none)
-                  8000338c    00000010                           : copy_zero_init.obj (.text:decompress:ZI)
-                  8000339c    0000000c     system.lib : cpu.obj (.text:CPUIntStatus)
-                  800033a8    00000008     rtsv7A8_A_le_eabi.lib : copy_decompress_rle.obj (.text:decompress:rle24)
-                  800033b0    00000004                           : i_div0.obj (.text)
+                  800019bc    000004d4     int_LCD_I2C.obj (.text)
+                  80001e90    00000488     system.lib : cp15.obj (.text)
+                  80002318    00000418     platform.lib : hsi2c.obj (.text)
+                  80002730    000003e4     system.lib : interrupt.obj (.text)
+                  80002b14    00000180     rtsv7A8_A_le_eabi.lib : memcpy32.obj (.text)
+                  80002c94    00000170     platform.lib : sysdelay.obj (.text)
+                  80002e04    0000010c     system.lib : exceptionhandler.obj (.text)
+                  80002f10    000000f0     rtsv7A8_A_le_eabi.lib : u_div32.obj (.text)
+                  80003000    000000b0                           : memset32.obj (.text)
+                  800030b0    000000a4                           : autoinit.obj (.text)
+                  80003154    000000a0                           : copy_decompress_rle.obj (.text)
+                  800031f4    00000084                           : cpy_tbl.obj (.text)
+                  80003278    00000084     system.lib : startup.obj (.text)
+                  800032fc    00000060                : cpu.obj (.text)
+                  8000335c    0000004c     utils.lib : delay.obj (.text)
+                  800033a8    00000014     rtsv7A8_A_le_eabi.lib : copy_decompress_none.obj (.text:decompress:none)
+                  800033bc    00000010                           : copy_zero_init.obj (.text:decompress:ZI)
+                  800033cc    0000000c     system.lib : cpu.obj (.text:CPUIntStatus)
+                  800033d8    00000008     rtsv7A8_A_le_eabi.lib : copy_decompress_rle.obj (.text:decompress:rle24)
+                  800033e0    00000004                           : i_div0.obj (.text)
 
-.bss       0    800033b4    00000220     UNINITIALIZED
-                  800033b4    00000200     system.lib : interrupt.obj (.bss:fnRAMVectors)
-                  800035b4    00000018     (.common:dataToSlave)
-                  800035cc    00000004     (.common:numOfBytes)
-                  800035d0    00000004     (.common:tCount)
+.bss       0    800033e4    00000208     UNINITIALIZED
+                  800033e4    00000200     system.lib : interrupt.obj (.bss:fnRAMVectors)
+                  800035e4    00000004     (.common:numOfBytes)
+                  800035e8    00000004     (.common:tCount)
 
 .TI.noinit 
-*          0    800033b4    00000000     UNINITIALIZED
+*          0    800033e4    00000000     UNINITIALIZED
 
-.const     0    800035d4    0000003c     
-                  800035d4    00000038     system.lib : startup.obj (.const:vecTbl)
-                  8000360c    00000004                : startup.obj (.const)
+.const     0    800035ec    0000003c     
+                  800035ec    00000038     system.lib : startup.obj (.const:vecTbl)
+                  80003624    00000004                : startup.obj (.const)
 
-.data      0    80003610    00000008     UNINITIALIZED
-                  80003610    00000004     int_LCD_I2C.obj (.data)
-                  80003614    00000004     platform.lib : sysdelay.obj (.data)
+.data      0    80003628    00000020     UNINITIALIZED
+                  80003628    0000001c     int_LCD_I2C.obj (.data)
+                  80003644    00000004     platform.lib : sysdelay.obj (.data)
 
 .TI.persistent 
-*          0    80003610    00000000     UNINITIALIZED
+*          0    80003628    00000000     UNINITIALIZED
 
 .stack     0    87fffff0    00000008     UNINITIALIZED
                   87fffff0    00000008     --HOLE--
 
-.cinit     0    80003618    00000038     
-                  80003618    0000000e     (.cinit..data.load) [load image, compression = rle]
-                  80003626    00000002     --HOLE-- [fill = 0]
-                  80003628    0000000c     (__TI_handler_table)
-                  80003634    00000004     --HOLE-- [fill = 0]
-                  80003638    00000008     (.cinit..bss.load) [load image, compression = zero_init]
-                  80003640    00000010     (__TI_cinit_table)
+.cinit     0    80003648    00000038     
+                  80003648    00000012     (.cinit..data.load) [load image, compression = rle]
+                  8000365a    00000002     --HOLE-- [fill = 0]
+                  8000365c    0000000c     (__TI_handler_table)
+                  80003668    00000008     (.cinit..bss.load) [load image, compression = zero_init]
+                  80003670    00000010     (__TI_cinit_table)
 
 
 LINKER GENERATED COPY TABLES
 
-__TI_cinit_table @ 80003640 records: 2, size/record: 8, table size: 16
-	.data: load addr=80003618, load size=0000000e bytes, run addr=80003610, run size=00000008 bytes, compression=rle
-	.bss: load addr=80003638, load size=00000008 bytes, run addr=800033b4, run size=00000220 bytes, compression=zero_init
+__TI_cinit_table @ 80003670 records: 2, size/record: 8, table size: 16
+	.data: load addr=80003648, load size=00000012 bytes, run addr=80003628, run size=00000020 bytes, compression=rle
+	.bss: load addr=80003668, load size=00000008 bytes, run addr=800033e4, run size=00000208 bytes, compression=zero_init
 
 
 LINKER GENERATED HANDLER TABLE
 
-__TI_handler_table @ 80003628 records: 3, size/record: 4, table size: 12
+__TI_handler_table @ 8000365c records: 3, size/record: 4, table size: 12
 	index: 0, handler: __TI_decompress_rle24
 	index: 1, handler: __TI_decompress_none
 	index: 2, handler: __TI_zero_init
@@ -121,7 +119,7 @@ callee name               trampoline name
    callee addr  tramp addr   call addr  call info
 --------------  -----------  ---------  ----------------
 __TI_auto_init            $Tramp$AA$S$$__TI_auto_init
-   80003080     800000c8     800000a0   system.lib : init.obj (.text:Entry)
+   800030b0     800000c8     800000a0   system.lib : init.obj (.text:Entry)
 
 [1 trampolines]
 [1 trampoline calls]
@@ -131,43 +129,43 @@ GLOBAL SYMBOLS: SORTED ALPHABETICALLY BY Name
 
 address   name                         
 -------   ----                         
-8000360c  AM335X_VECTOR_BASE           
-80002ec8  AbortHandler                 
-800022bc  CP15AuxControlFeatureDisable 
-800022a8  CP15AuxControlFeatureEnable  
-80002250  CP15BranchPredictionDisable  
-80002240  CP15BranchPredictionEnable   
-80002234  CP15BranchPredictorInvalidate
-80002270  CP15ControlFeatureDisable    
-80002284  CP15ControlFeatureEnable     
-80001f4c  CP15DCacheClean              
-80002084  CP15DCacheCleanBuff          
-80001fe0  CP15DCacheCleanFlush         
-800020d8  CP15DCacheCleanFlushBuff     
-80001e7c  CP15DCacheDisable            
-80001ea8  CP15DCacheEnable             
-80001eb8  CP15DCacheFlush              
-8000212c  CP15DCacheFlushBuff          
-80002260  CP15DomainAccessClientSet    
-80001e60  CP15ICacheDisable            
-80001e98  CP15ICacheEnable             
-80002074  CP15ICacheFlush              
-80002190  CP15ICacheFlushBuff          
-800021fc  CP15MMUDisable               
-80002214  CP15MMUEnable                
-800022d0  CP15MainIdPrimPartNumGet     
-800021f0  CP15TlbInvalidate            
-800021e4  CP15Ttb0Set                  
-80002298  CP15TtbCtlTtb0Config         
-80002228  CP15VectorBaseAddrSet        
-800032e8  CPUAbortHandler              
-8000339c  CPUIntStatus                 
-800032cc  CPUSwitchToPrivilegedMode    
-800032d4  CPUSwitchToUserMode          
-8000330c  CPUfiqd                      
-8000331c  CPUfiqe                      
-800032ec  CPUirqd                      
-800032fc  CPUirqe                      
+80003624  AM335X_VECTOR_BASE           
+80002ef8  AbortHandler                 
+800022ec  CP15AuxControlFeatureDisable 
+800022d8  CP15AuxControlFeatureEnable  
+80002280  CP15BranchPredictionDisable  
+80002270  CP15BranchPredictionEnable   
+80002264  CP15BranchPredictorInvalidate
+800022a0  CP15ControlFeatureDisable    
+800022b4  CP15ControlFeatureEnable     
+80001f7c  CP15DCacheClean              
+800020b4  CP15DCacheCleanBuff          
+80002010  CP15DCacheCleanFlush         
+80002108  CP15DCacheCleanFlushBuff     
+80001eac  CP15DCacheDisable            
+80001ed8  CP15DCacheEnable             
+80001ee8  CP15DCacheFlush              
+8000215c  CP15DCacheFlushBuff          
+80002290  CP15DomainAccessClientSet    
+80001e90  CP15ICacheDisable            
+80001ec8  CP15ICacheEnable             
+800020a4  CP15ICacheFlush              
+800021c0  CP15ICacheFlushBuff          
+8000222c  CP15MMUDisable               
+80002244  CP15MMUEnable                
+80002300  CP15MainIdPrimPartNumGet     
+80002220  CP15TlbInvalidate            
+80002214  CP15Ttb0Set                  
+800022c8  CP15TtbCtlTtb0Config         
+80002258  CP15VectorBaseAddrSet        
+80003318  CPUAbortHandler              
+800033cc  CPUIntStatus                 
+800032fc  CPUSwitchToPrivilegedMode    
+80003304  CPUSwitchToUserMode          
+8000333c  CPUfiqd                      
+8000334c  CPUfiqe                      
+8000331c  CPUirqd                      
+8000332c  CPUirqe                      
 80001244  DMTimer1msModuleClkConfig    
 80000d2c  DMTimer2ModuleClkConfig      
 80000ba0  DMTimer3ModuleClkConfig      
@@ -200,11 +198,11 @@ address   name
 80001788  DMTimerResetConfigure        
 80001738  DMTimerTriggerSet            
 800019a4  DMTimerWritePostedStatusGet  
-8000332c  DelayTimerSetup              
+8000335c  DelayTimerSetup              
 80000000  Entry                        
-80002ec4  FIQHandler                   
-800024ac  I2C0ModuleClkConfig          
-80002344  I2C1ModuleClkConfig          
+80002ef4  FIQHandler                   
+800024dc  I2C0ModuleClkConfig          
+80002374  I2C1ModuleClkConfig          
 80000608  I2CActiveOwnAddressGet       
 80000818  I2CAutoIdleDisable           
 800007f4  I2CAutoIdleEnable            
@@ -223,7 +221,7 @@ address   name
 80000860  I2CGlobalWakeUpDisable       
 8000083c  I2CGlobalWakeUpEnable        
 80000884  I2CIdleModeSelect            
-80001d30  I2CIsr                       
+80001d74  I2CIsr                       
 80000194  I2CMasterBusBusy             
 800001cc  I2CMasterBusy                
 80000210  I2CMasterControl             
@@ -246,95 +244,95 @@ address   name
 80000234  I2CMasterStart               
 80000258  I2CMasterStop                
 80000758  I2COwnAddressSet             
-800022e8  I2CPinMuxSetup               
+80002318  I2CPinMuxSetup               
 800003c0  I2CSetDataCount              
 800007d0  I2CSoftReset                 
 80000a1c  I2CSystemStatusGet           
 80000990  I2CWakeUpDisable             
 80000904  I2CWakeUpEnable              
-80002e18  IRQHandler                   
-80002748  IntAINTCInit                 
-80002880  IntActiveIrqNumGet           
-80002918  IntCurrIrqPriorityGet        
-80002a70  IntDisable                   
-80002a88  IntEnable                    
-80002904  IntFuncClkAutoGateSet        
-800028f0  IntFuncClkFreeRunSet         
-8000286c  IntIfClkAutoGateSet          
-80002858  IntIfClkFreeRunSet           
-80002a58  IntMasterFIQDisable          
-80002a4c  IntMasterFIQEnable           
-80002a40  IntMasterIRQDisable          
-80002a34  IntMasterIRQEnable           
-80002a64  IntMasterStatusGet           
-800029f8  IntPendingIrqMaskedStatusGet 
-800027b8  IntPrioritySet               
-80002928  IntPriorityThresholdGet      
-80002938  IntPriorityThresholdSet      
-800028b4  IntProtectionDisable         
-800028a4  IntProtectionEnable          
-80002958  IntRawStatusGet              
-80002704  IntRegister                  
-800029c8  IntSoftwareIntClear          
-80002998  IntSoftwareIntSet            
-80002890  IntSpurIrqFlagGet            
-800028dc  IntSyncClkAutoGateSet        
-800028c8  IntSyncClkFreeRunSet         
-80002824  IntSystemDisable             
-800027f0  IntSystemEnable              
-80002728  IntUnRegister                
-8000336c  IsTimerElapsed               
+80002e48  IRQHandler                   
+80002778  IntAINTCInit                 
+800028b0  IntActiveIrqNumGet           
+80002948  IntCurrIrqPriorityGet        
+80002aa0  IntDisable                   
+80002ab8  IntEnable                    
+80002934  IntFuncClkAutoGateSet        
+80002920  IntFuncClkFreeRunSet         
+8000289c  IntIfClkAutoGateSet          
+80002888  IntIfClkFreeRunSet           
+80002a88  IntMasterFIQDisable          
+80002a7c  IntMasterFIQEnable           
+80002a70  IntMasterIRQDisable          
+80002a64  IntMasterIRQEnable           
+80002a94  IntMasterStatusGet           
+80002a28  IntPendingIrqMaskedStatusGet 
+800027e8  IntPrioritySet               
+80002958  IntPriorityThresholdGet      
+80002968  IntPriorityThresholdSet      
+800028e4  IntProtectionDisable         
+800028d4  IntProtectionEnable          
+80002988  IntRawStatusGet              
+80002734  IntRegister                  
+800029f8  IntSoftwareIntClear          
+800029c8  IntSoftwareIntSet            
+800028c0  IntSpurIrqFlagGet            
+8000290c  IntSyncClkAutoGateSet        
+800028f8  IntSyncClkFreeRunSet         
+80002854  IntSystemDisable             
+80002820  IntSystemEnable              
+80002758  IntUnRegister                
+8000339c  IsTimerElapsed               
 UNDEFED   SHT$$INIT_ARRAY$$Base        
 UNDEFED   SHT$$INIT_ARRAY$$Limit       
-80002df0  SVC_Handler                  
-8000334c  StartTimer                   
-80003360  StopTimer                    
-80002c64  SysDelayTimerSetup           
-80002d94  SysIsTimerElapsed            
-80002d28  SysStartTimer                
-80002d78  SysStopTimer                 
-80002cac  Sysdelay                     
-80002ec8  UndefInstHandler             
+80002e20  SVC_Handler                  
+8000337c  StartTimer                   
+80003390  StopTimer                    
+80002c94  SysDelayTimerSetup           
+80002dc4  SysIsTimerElapsed            
+80002d58  SysStartTimer                
+80002da8  SysStopTimer                 
+80002cdc  Sysdelay                     
+80002ef8  UndefInstHandler             
 87fffff8  __STACK_END                  
 00000008  __STACK_SIZE                 
-80003640  __TI_CINIT_Base              
-80003650  __TI_CINIT_Limit             
-80003628  __TI_Handler_Table_Base      
-80003634  __TI_Handler_Table_Limit     
-80003080  __TI_auto_init               
-80003378  __TI_decompress_none         
-800033a8  __TI_decompress_rle24        
-80003618  __TI_static_base__           
-8000338c  __TI_zero_init               
-800033b0  __aeabi_idiv0                
-80002fd0  __aeabi_memclr               
-80002fd0  __aeabi_memclr4              
-80002fd0  __aeabi_memclr8              
-80002ae4  __aeabi_memcpy               
-80002ae4  __aeabi_memcpy4              
-80002ae4  __aeabi_memcpy8              
-80002fd4  __aeabi_memset               
-80002fd4  __aeabi_memset4              
-80002fd4  __aeabi_memset8              
-80002ee0  __aeabi_uidiv                
-80002ee0  __aeabi_uidivmod             
+80003670  __TI_CINIT_Base              
+80003680  __TI_CINIT_Limit             
+8000365c  __TI_Handler_Table_Base      
+80003668  __TI_Handler_Table_Limit     
+800030b0  __TI_auto_init               
+800033a8  __TI_decompress_none         
+800033d8  __TI_decompress_rle24        
+80003648  __TI_static_base__           
+800033bc  __TI_zero_init               
+800033e0  __aeabi_idiv0                
+80003000  __aeabi_memclr               
+80003000  __aeabi_memclr4              
+80003000  __aeabi_memclr8              
+80002b14  __aeabi_memcpy               
+80002b14  __aeabi_memcpy4              
+80002b14  __aeabi_memcpy8              
+80003004  __aeabi_memset               
+80003004  __aeabi_memset4              
+80003004  __aeabi_memset8              
+80002f10  __aeabi_uidiv                
+80002f10  __aeabi_uidivmod             
 ffffffff  __binit__                    
 ffffffff  __c_args__                   
 87fffff0  __stack                      
 ffffffff  binit                        
-800035d4  bss_end                      
-800033b4  bss_start                    
-800031c4  copy_in                      
-800035b4  dataToSlave                  
-80003338  delay                        
-80003610  flag                         
-800033b4  fnRAMVectors                 
+800035ec  bss_end                      
+800033e4  bss_start                    
+800031f4  copy_in                      
+80003628  dataToSlave                  
+80003368  delay                        
+80003640  flag                         
+800033e4  fnRAMVectors                 
 800019bc  main                         
-80002ae4  memcpy                       
-80002fe0  memset                       
-800035cc  numOfBytes                   
-80003248  start_boot                   
-800035d0  tCount                       
+80002b14  memcpy                       
+80003010  memset                       
+800035e4  numOfBytes                   
+80003278  start_boot                   
+800035e8  tCount                       
 
 
 GLOBAL SYMBOLS: SORTED BY Symbol Address 
@@ -421,123 +419,123 @@ address   name
 80001960  DMTimerPostedModeConfig      
 800019a4  DMTimerWritePostedStatusGet  
 800019bc  main                         
-80001d30  I2CIsr                       
-80001e60  CP15ICacheDisable            
-80001e7c  CP15DCacheDisable            
-80001e98  CP15ICacheEnable             
-80001ea8  CP15DCacheEnable             
-80001eb8  CP15DCacheFlush              
-80001f4c  CP15DCacheClean              
-80001fe0  CP15DCacheCleanFlush         
-80002074  CP15ICacheFlush              
-80002084  CP15DCacheCleanBuff          
-800020d8  CP15DCacheCleanFlushBuff     
-8000212c  CP15DCacheFlushBuff          
-80002190  CP15ICacheFlushBuff          
-800021e4  CP15Ttb0Set                  
-800021f0  CP15TlbInvalidate            
-800021fc  CP15MMUDisable               
-80002214  CP15MMUEnable                
-80002228  CP15VectorBaseAddrSet        
-80002234  CP15BranchPredictorInvalidate
-80002240  CP15BranchPredictionEnable   
-80002250  CP15BranchPredictionDisable  
-80002260  CP15DomainAccessClientSet    
-80002270  CP15ControlFeatureDisable    
-80002284  CP15ControlFeatureEnable     
-80002298  CP15TtbCtlTtb0Config         
-800022a8  CP15AuxControlFeatureEnable  
-800022bc  CP15AuxControlFeatureDisable 
-800022d0  CP15MainIdPrimPartNumGet     
-800022e8  I2CPinMuxSetup               
-80002344  I2C1ModuleClkConfig          
-800024ac  I2C0ModuleClkConfig          
-80002704  IntRegister                  
-80002728  IntUnRegister                
-80002748  IntAINTCInit                 
-800027b8  IntPrioritySet               
-800027f0  IntSystemEnable              
-80002824  IntSystemDisable             
-80002858  IntIfClkFreeRunSet           
-8000286c  IntIfClkAutoGateSet          
-80002880  IntActiveIrqNumGet           
-80002890  IntSpurIrqFlagGet            
-800028a4  IntProtectionEnable          
-800028b4  IntProtectionDisable         
-800028c8  IntSyncClkFreeRunSet         
-800028dc  IntSyncClkAutoGateSet        
-800028f0  IntFuncClkFreeRunSet         
-80002904  IntFuncClkAutoGateSet        
-80002918  IntCurrIrqPriorityGet        
-80002928  IntPriorityThresholdGet      
-80002938  IntPriorityThresholdSet      
-80002958  IntRawStatusGet              
-80002998  IntSoftwareIntSet            
-800029c8  IntSoftwareIntClear          
-800029f8  IntPendingIrqMaskedStatusGet 
-80002a34  IntMasterIRQEnable           
-80002a40  IntMasterIRQDisable          
-80002a4c  IntMasterFIQEnable           
-80002a58  IntMasterFIQDisable          
-80002a64  IntMasterStatusGet           
-80002a70  IntDisable                   
-80002a88  IntEnable                    
-80002ae4  __aeabi_memcpy               
-80002ae4  __aeabi_memcpy4              
-80002ae4  __aeabi_memcpy8              
-80002ae4  memcpy                       
-80002c64  SysDelayTimerSetup           
-80002cac  Sysdelay                     
-80002d28  SysStartTimer                
-80002d78  SysStopTimer                 
-80002d94  SysIsTimerElapsed            
-80002df0  SVC_Handler                  
-80002e18  IRQHandler                   
-80002ec4  FIQHandler                   
-80002ec8  AbortHandler                 
-80002ec8  UndefInstHandler             
-80002ee0  __aeabi_uidiv                
-80002ee0  __aeabi_uidivmod             
-80002fd0  __aeabi_memclr               
-80002fd0  __aeabi_memclr4              
-80002fd0  __aeabi_memclr8              
-80002fd4  __aeabi_memset               
-80002fd4  __aeabi_memset4              
-80002fd4  __aeabi_memset8              
-80002fe0  memset                       
-80003080  __TI_auto_init               
-800031c4  copy_in                      
-80003248  start_boot                   
-800032cc  CPUSwitchToPrivilegedMode    
-800032d4  CPUSwitchToUserMode          
-800032e8  CPUAbortHandler              
-800032ec  CPUirqd                      
-800032fc  CPUirqe                      
-8000330c  CPUfiqd                      
-8000331c  CPUfiqe                      
-8000332c  DelayTimerSetup              
-80003338  delay                        
-8000334c  StartTimer                   
-80003360  StopTimer                    
-8000336c  IsTimerElapsed               
-80003378  __TI_decompress_none         
-8000338c  __TI_zero_init               
-8000339c  CPUIntStatus                 
-800033a8  __TI_decompress_rle24        
-800033b0  __aeabi_idiv0                
-800033b4  bss_start                    
-800033b4  fnRAMVectors                 
-800035b4  dataToSlave                  
-800035cc  numOfBytes                   
-800035d0  tCount                       
-800035d4  bss_end                      
-8000360c  AM335X_VECTOR_BASE           
-80003610  flag                         
-80003618  __TI_static_base__           
-80003628  __TI_Handler_Table_Base      
-80003634  __TI_Handler_Table_Limit     
-80003640  __TI_CINIT_Base              
-80003650  __TI_CINIT_Limit             
+80001d74  I2CIsr                       
+80001e90  CP15ICacheDisable            
+80001eac  CP15DCacheDisable            
+80001ec8  CP15ICacheEnable             
+80001ed8  CP15DCacheEnable             
+80001ee8  CP15DCacheFlush              
+80001f7c  CP15DCacheClean              
+80002010  CP15DCacheCleanFlush         
+800020a4  CP15ICacheFlush              
+800020b4  CP15DCacheCleanBuff          
+80002108  CP15DCacheCleanFlushBuff     
+8000215c  CP15DCacheFlushBuff          
+800021c0  CP15ICacheFlushBuff          
+80002214  CP15Ttb0Set                  
+80002220  CP15TlbInvalidate            
+8000222c  CP15MMUDisable               
+80002244  CP15MMUEnable                
+80002258  CP15VectorBaseAddrSet        
+80002264  CP15BranchPredictorInvalidate
+80002270  CP15BranchPredictionEnable   
+80002280  CP15BranchPredictionDisable  
+80002290  CP15DomainAccessClientSet    
+800022a0  CP15ControlFeatureDisable    
+800022b4  CP15ControlFeatureEnable     
+800022c8  CP15TtbCtlTtb0Config         
+800022d8  CP15AuxControlFeatureEnable  
+800022ec  CP15AuxControlFeatureDisable 
+80002300  CP15MainIdPrimPartNumGet     
+80002318  I2CPinMuxSetup               
+80002374  I2C1ModuleClkConfig          
+800024dc  I2C0ModuleClkConfig          
+80002734  IntRegister                  
+80002758  IntUnRegister                
+80002778  IntAINTCInit                 
+800027e8  IntPrioritySet               
+80002820  IntSystemEnable              
+80002854  IntSystemDisable             
+80002888  IntIfClkFreeRunSet           
+8000289c  IntIfClkAutoGateSet          
+800028b0  IntActiveIrqNumGet           
+800028c0  IntSpurIrqFlagGet            
+800028d4  IntProtectionEnable          
+800028e4  IntProtectionDisable         
+800028f8  IntSyncClkFreeRunSet         
+8000290c  IntSyncClkAutoGateSet        
+80002920  IntFuncClkFreeRunSet         
+80002934  IntFuncClkAutoGateSet        
+80002948  IntCurrIrqPriorityGet        
+80002958  IntPriorityThresholdGet      
+80002968  IntPriorityThresholdSet      
+80002988  IntRawStatusGet              
+800029c8  IntSoftwareIntSet            
+800029f8  IntSoftwareIntClear          
+80002a28  IntPendingIrqMaskedStatusGet 
+80002a64  IntMasterIRQEnable           
+80002a70  IntMasterIRQDisable          
+80002a7c  IntMasterFIQEnable           
+80002a88  IntMasterFIQDisable          
+80002a94  IntMasterStatusGet           
+80002aa0  IntDisable                   
+80002ab8  IntEnable                    
+80002b14  __aeabi_memcpy               
+80002b14  __aeabi_memcpy4              
+80002b14  __aeabi_memcpy8              
+80002b14  memcpy                       
+80002c94  SysDelayTimerSetup           
+80002cdc  Sysdelay                     
+80002d58  SysStartTimer                
+80002da8  SysStopTimer                 
+80002dc4  SysIsTimerElapsed            
+80002e20  SVC_Handler                  
+80002e48  IRQHandler                   
+80002ef4  FIQHandler                   
+80002ef8  AbortHandler                 
+80002ef8  UndefInstHandler             
+80002f10  __aeabi_uidiv                
+80002f10  __aeabi_uidivmod             
+80003000  __aeabi_memclr               
+80003000  __aeabi_memclr4              
+80003000  __aeabi_memclr8              
+80003004  __aeabi_memset               
+80003004  __aeabi_memset4              
+80003004  __aeabi_memset8              
+80003010  memset                       
+800030b0  __TI_auto_init               
+800031f4  copy_in                      
+80003278  start_boot                   
+800032fc  CPUSwitchToPrivilegedMode    
+80003304  CPUSwitchToUserMode          
+80003318  CPUAbortHandler              
+8000331c  CPUirqd                      
+8000332c  CPUirqe                      
+8000333c  CPUfiqd                      
+8000334c  CPUfiqe                      
+8000335c  DelayTimerSetup              
+80003368  delay                        
+8000337c  StartTimer                   
+80003390  StopTimer                    
+8000339c  IsTimerElapsed               
+800033a8  __TI_decompress_none         
+800033bc  __TI_zero_init               
+800033cc  CPUIntStatus                 
+800033d8  __TI_decompress_rle24        
+800033e0  __aeabi_idiv0                
+800033e4  bss_start                    
+800033e4  fnRAMVectors                 
+800035e4  numOfBytes                   
+800035e8  tCount                       
+800035ec  bss_end                      
+80003624  AM335X_VECTOR_BASE           
+80003628  dataToSlave                  
+80003640  flag                         
+80003648  __TI_static_base__           
+8000365c  __TI_Handler_Table_Base      
+80003668  __TI_Handler_Table_Limit     
+80003670  __TI_CINIT_Base              
+80003680  __TI_CINIT_Limit             
 87fffff0  __stack                      
 87fffff8  __STACK_END                  
 ffffffff  __binit__                    

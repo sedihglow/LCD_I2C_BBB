@@ -97,7 +97,7 @@ static void clearDisplay(uint32_t baseAddr);
 **              GLOBAL VARIABLE DEFINITIONS
 ******************************************************************************/
 //volatile unsigned char dataFromSlave[2];
-volatile unsigned char dataToSlave[21];
+volatile unsigned char dataToSlave[MSG_LEN_MAX] = {'\0'};
 volatile unsigned int numOfBytes;
 volatile unsigned int flag = 1;
 volatile unsigned int tCount;
@@ -105,7 +105,8 @@ volatile unsigned int tCount;
 
 /*******************************************************************************
  * 				GENERAL #DEFINES
- ******************************************************************************/// messeges
+ ******************************************************************************/
+//messeges
 #define MSG_OPEN "Hello!"
 #define MSG_L1   "James Ross."
 #define MSG_L2   "Indeed."
@@ -127,7 +128,7 @@ int main(void)
     /* Configures AINTC to generate interrupt */
     intcConfigureI2C(I2CIsr);
 
-    // set timer 7 settings and enable clock
+    // set timer 7 settings and enable clock registers
     DelayTimerSetup();
 
     /*
@@ -152,6 +153,10 @@ int main(void)
     	nextLine(SOC_I2C_1_REGS);
     	sendText(SOC_I2C_1_REGS, MSG_L2,MSG_L2_LEN);
     	delay(3000);
+    	dataToSlave[0] = LCD_CMD;
+    	dataToSlave[1] = 0x38;
+    	dataToSlave[2] = 0x18;
+    	SetupI2CTransmit(SOC_I2C_1_REGS, 3);
     }
 }// end main
 
@@ -174,7 +179,7 @@ static void clearDisplay(uint32_t baseAddr)
 	dataToSlave[1] = CLR_SCRN;
 	SetupI2CTransmit(baseAddr, 2);
 	delay(1);
-}// end cleardisplay
+}// end clearDisplay
 
 static void sendText(uint32_t baseAddr, uint8_t *text, uint8_t count){
 	uint8_t i = 0;
@@ -188,11 +193,12 @@ static void sendText(uint32_t baseAddr, uint8_t *text, uint8_t count){
 	SetupI2CTransmit(baseAddr, count+1);
 	delay(1);
 
-}
+}//end sendText
 
 static void initLCD(uint32_t baseAddr)
 {
-    tCount = 0;        // resets transmit counter before every send
+	// See int_LCD_I2C.h for command functionalities
+    tCount = 0; // resets transmit counter before every send
     dataToSlave[0] = LCD_CMD;
     dataToSlave[1] = FUNC_SET;
     dataToSlave[2] = SET_BIAS;
@@ -204,7 +210,7 @@ static void initLCD(uint32_t baseAddr)
     dataToSlave[8] = ENTRY_SET;
     SetupI2CTransmit(baseAddr, 9);
     delay(1);
-}
+}//end initLCD
 
 static void SetupI2C(uint32_t baseAddr)
 {
@@ -233,7 +239,7 @@ static void SetupI2C(uint32_t baseAddr)
 
     /* Bring I2C module out of reset */
     I2CMasterEnable(baseAddr);
-}
+}//end setupI2C
 
 /*
 ** Transmits data over I2C bus
@@ -331,7 +337,7 @@ static void intcConfigureI2C(void (*isr_ptr)(void))
 
     /* Enabling the system interrupt in AINTC. */
     IntSystemEnable(SYS_INT_I2C1INT);
-}// end I2CAintConfigure
+}// end intcConfigureI2C
 
 static void cleanupInterrupts(uint32_t baseAddr)
 {
@@ -376,6 +382,7 @@ void I2CIsr(void)
 
     }
 
+    // Execute when stop condition is sent
     if (status & I2C_INT_STOP_CONDITION)
     {
            /* Disable transmit data ready and receive data read interupt */
@@ -385,6 +392,7 @@ void I2CIsr(void)
          flag = 0;
     }
 
+    // check if NACK bit is raised
     if(status & I2C_INT_NO_ACK)
     {
          I2CMasterIntDisableEx(SOC_I2C_1_REGS, I2C_INT_TRANSMIT_READY  |
@@ -418,6 +426,5 @@ void I2CIsr(void)
          }
     }
 	***************************************************************************/
-}
-/***************************** End Of File ************************************/
-
+}//end I2CIsr
+/***************************** EOF ************************************/
