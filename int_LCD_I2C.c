@@ -76,43 +76,44 @@
 *
 */
 
-#include "hsi2c.h"
-#include "interrupt.h"
-#include "soc_AM335x.h"
-#include "consoleUtils.h"
-#include "beaglebone.h"
-#include "delay.h"
-#include "string.h"
-
+#include "int_LCD_I2C.h"
 
 /******************************************************************************
 **              INTERNAL FUNCTION PROTOTYPES
 ******************************************************************************/
-//void I2CIsr(void); // interupt service routine
-static void SetupI2C(void);
-//static void I2CAintcConfigure(void);// for Aint interrupts
-//static void cleanupInterrupts(void);// interupt junk
-static void SetupI2CTransmit(unsigned int dcount);
-static void nextLine(void);
-static void sendtext(unsigned char *text,unsigned char count);
-static void cleardisplay(void);
+void I2CIsr(void); // interupt service routine
+static void initLCD(uint32_t baseAddr);  // initializes the LCD screen
+static void SetupI2C(uint32_t baseAddr);
+static void intcConfigureI2C(void (*isr_ptr)(void));
+static void cleanupInterrupts(uint32_t baseAddr);
+static void SetupI2CTransmit(uint32_t baseAddr, unsigned int dcount);
+static void nextLine(uint32_t baseAddr);
+static void sendText(uint32_t baseAddr, uint8_t *text, uint8_t count);
+static void clearDisplay(uint32_t baseAddr);
 
 //static void SetupI2CReception(unsigned int dcount);
 
 /******************************************************************************
 **              GLOBAL VARIABLE DEFINITIONS
 ******************************************************************************/
-volatile unsigned char dataFromSlave[2];
+//volatile unsigned char dataFromSlave[2];
 volatile unsigned char dataToSlave[21];
 volatile unsigned int numOfBytes;
 volatile unsigned int flag = 1;
 volatile unsigned int tCount;
-volatile unsigned int rCount;
-volatile unsigned char I2C_SLAVE_ADDR = 0x3C;
-volatile unsigned char COMMAND = 0x00;
-unsigned char line1[20] = "Hi Doug..!!";			//Change this text to display on 1st line of LCD
-volatile unsigned char line2[20] = "How are you...??!!";	//Change this text to display on 2nd line of LCD
+//volatile unsigned int rCount;
 
+/*******************************************************************************
+ * 				GENERAL #DEFINES
+ ******************************************************************************/// messeges
+#define MSG_OPEN "Hello!"
+#define MSG_L1   "James Ross."
+#define MSG_L2   "Indeed."
+
+// message lengths (only valid if not altered. strLen is appropriate get these)
+#define MSG_OPEN_LEN  6
+#define MSG_L1_LEN    11
+#define MSG_L2_LEN    7
 
 /******************************************************************************
 **              FUNCTION DEFINITIONS
@@ -120,14 +121,13 @@ volatile unsigned char line2[20] = "How are you...??!!";	//Change this text to d
 
 int main(void)
 {
-
-
     /* Enable IRQ in CPSR */
     IntMasterIRQEnable();
 
     /* Configures AINTC to generate interrupt */
-    I2CAintcConfigure();
+    intcConfigureI2C(I2CIsr);
 
+    // set timer 7 settings and enable clock
     DelayTimerSetup();
 
     /*
@@ -135,85 +135,78 @@ int main(void)
     ** condition on HSI2C bus and to transmit data at a
     ** speed of 100khz
     */
+    SetupI2C(SOC_I2C_1_REGS);
 
-    SetupI2C();
+    // sets the LCD settings and turns it on
+    initLCD(SOC_I2C_1_REGS);
 
-
-    tCount = 0;
-    dataToSlave[0] = ;		//Write your LCD Initialization commands here
-    dataToSlave[1] = ;
-    dataToSlave[2] = ;
-
-    dataToSlave[3]=;
-    dataToSlave[4]=;
-    dataToSlave[5]=;
-    dataToSlave[6]=;
-    dataToSlave[7]=;
-    dataToSlave[8]=;
-
-    SetupI2CTransmit(9);
-    delay(1);
-	tCount = 0;
-	dataToSlave[0]=;	//Write data initialization command here
-	dataToSlave[1]='H';
-	dataToSlave[2]='e';
-	dataToSlave[3]='l';
-	dataToSlave[4]='l';
-	dataToSlave[5]='o';
-	dataToSlave[6]='!';
-	dataToSlave[7]='!';
-	SetupI2CTransmit(8);
+    // opening message
+    sendText(SOC_I2C_1_REGS, MSG_OPEN, MSG_OPEN_LEN);
 	delay(1000);
 
-    while(1){
-
-    	cleardisplay();
+    while(true){
+    	clearDisplay(SOC_I2C_1_REGS);
+    	delay(1000); // blink time
+    	sendText(SOC_I2C_1_REGS, MSG_L1,MSG_L1_LEN);
     	delay(1000);
-    	sendtext(line1,strlen(line1));
-    	delay(1000);
-    	nextLine();
-    	sendtext(line2,strlen(line2));
+    	nextLine(SOC_I2C_1_REGS);
+    	sendText(SOC_I2C_1_REGS, MSG_L2,MSG_L2_LEN);
     	delay(3000);
-
     }
+}// end main
 
-
-}
-static void nextLine (void){
+static void nextLine(uint32_t baseAddr)
+{
 	tCount = 0;
-	dataToSlave[0] = 0x00;
-	dataToSlave[1] = 0xC0; // set DDRAM ADdress command, sets cursor to the next
-						   // vertical line on the screen. The Address of the second
-						   // line is 0x40, the 0x80 bit lets the LCD screen know the
-						   // command is Set DDRAM Address
-	SetupI2CTransmit(2);
+	dataToSlave[0] = LCD_CMD;
+	dataToSlave[1] = NXT_LN;
+	/* set DDRAM aDdress command, sets cursor to the next
+     * vertical line on the screen. The Address of the second
+     * line is 0x40, the 0x80 bit lets the LCD screen know the
+     * command is Set DDRAM Address */
+	SetupI2CTransmit(baseAddr, 2);
+}// end nextLine
 
-}
-
-static void cleardisplay (void){
+static void clearDisplay(uint32_t baseAddr)
+{
 	tCount = 0;
-	dataToSlave[0] = 0x00;
-	dataToSlave[1] = 0x01;
-	SetupI2CTransmit(2);
+	dataToSlave[0] = LCD_CMD;
+	dataToSlave[1] = CLR_SCRN;
+	SetupI2CTransmit(baseAddr, 2);
 	delay(1);
+}// end cleardisplay
 
-}
-
-static void sendtext(unsigned char *text, unsigned char count){
+static void sendText(uint32_t baseAddr, uint8_t *text, uint8_t count){
+	uint8_t i = 0;
 	tCount = 0;
-	unsigned char i = 0;
-	dataToSlave[0] = 0x40;
-	while(i!=count)
-	{
+	dataToSlave[0] = LCD_DATA;
+
+	while(i != count){
 		dataToSlave[i+1]=text[i];
-		i = i + 1;
+		++i;
 	}
-	SetupI2CTransmit(count+1);
+	SetupI2CTransmit(baseAddr, count+1);
 	delay(1);
 
 }
 
-static void SetupI2C(void)
+static void initLCD(uint32_t baseAddr)
+{
+    tCount = 0;        // resets transmit counter before every send
+    dataToSlave[0] = LCD_CMD;
+    dataToSlave[1] = FUNC_SET;
+    dataToSlave[2] = SET_BIAS;
+    dataToSlave[3] = CONTRAST_SET;
+    dataToSlave[4] = PWR_ICON_HC;
+    dataToSlave[5] = FOLLOWER_CTL;
+    dataToSlave[6] = DISP_EN;
+    dataToSlave[7] = CLR_SCRN;
+    dataToSlave[8] = ENTRY_SET;
+    SetupI2CTransmit(baseAddr, 9);
+    delay(1);
+}
+
+static void SetupI2C(uint32_t baseAddr)
 {
     I2C1ModuleClkConfig(); // set with system clock
 
@@ -221,61 +214,60 @@ static void SetupI2C(void)
      * SCL: mode0-spi0_cs0, mode2: I2C1_SCL, gpio0[5]
      * SDA: mode0-spi0_d1, mode2: I2C1_SDA, gpio0[4]
      */
-    I2CPinMuxSetup(1);
+    I2CPinMuxSetup(I2C_P9_17_18);
 
     /* Put i2c in reset/disabled state */
-    I2CMasterDisable(SOC_I2C_1_REGS);
+    I2CMasterDisable(baseAddr);
 
     /*
     ** Upon reset Auto Idel is enabled.
     ** Hence it is disabled after reset
     */
-    I2CAutoIdleDisable(SOC_I2C_1_REGS);
+    I2CAutoIdleDisable(baseAddr);
 
     /* Configure i2c bus speed to 100khz */
-    I2CMasterInitExpClk(SOC_I2C_1_REGS, 48000000, 12000000, 100000);
+    I2CMasterInitExpClk(baseAddr, SYS_CLK, I2C_INTERNAL_CLK, I2C_OUT_CLK);
 
     /* Set i2c slave address */
-    I2CMasterSlaveAddrSet(SOC_I2C_1_REGS, I2C_SLAVE_ADDR);
+    I2CMasterSlaveAddrSet(baseAddr, SLAVE_ADDR_I2C);
 
     /* Bring I2C module out of reset */
-    I2CMasterEnable(SOC_I2C_1_REGS);
+    I2CMasterEnable(baseAddr);
 }
 
 /*
 ** Transmits data over I2C bus
 */
-static void SetupI2CTransmit(unsigned int dcount)
+static void SetupI2CTransmit(uint32_t baseAddr, uint32_t dcount)
 {
     /* Data Count specifies the number of bytes to be transferred */
-    I2CSetDataCount(SOC_I2C_1_REGS, dcount);
+    I2CSetDataCount(baseAddr, dcount);
 
-    numOfBytes = I2CDataCountGet(SOC_I2C_1_REGS);
+    numOfBytes = I2CDataCountGet(baseAddr);
 
-
-    cleanupInterrupts();
+    cleanupInterrupts(baseAddr);
 
     /*
     ** Configure I2C controller in Master Transmitter mode.A stop
     ** condition will be generated after data count number of
     ** bytes are transferred.
     */
-    I2CMasterControl(SOC_I2C_1_REGS, I2C_CFG_MST_TX | I2C_CFG_STOP | I2C_CFG_7BIT_SLAVE_ADDR);
+    I2CMasterControl(baseAddr, I2C_CFG_MST_TX | I2C_CFG_STOP | I2C_CFG_7BIT_SLAVE_ADDR);
 
     /* Transmit and Stop Condition Interrupts are enabled */
-    I2CMasterIntEnableEx(SOC_I2C_1_REGS, I2C_INT_TRANSMIT_READY |
+    I2CMasterIntEnableEx(baseAddr, I2C_INT_TRANSMIT_READY |
                                          I2C_INT_STOP_CONDITION );
 
     /* Generated Start Condition over I2C bus */
-    I2CMasterStart(SOC_I2C_1_REGS);
+    I2CMasterStart(baseAddr);
 
     while(flag);
 
     /* Wait untill I2C registers are ready to access */
-    while(0 == (I2CMasterIntRawStatus(SOC_I2C_1_REGS) & I2C_INT_ADRR_READY_ACESS));
+    while(0 == (I2CMasterIntRawStatus(baseAddr) & I2C_INT_ADRR_READY_ACESS));
 
     flag = 1;
-}
+}// end steupTransmit_I2C
 
 /*
 ** Receives data over I2C bus
@@ -326,28 +318,28 @@ static void SetupI2CTransmit(unsigned int dcount)
 //}
 
 /* Configures AINTC to generate interrupt */
-static void I2CAintcConfigure(void)
+static void intcConfigureI2C(void (*isr_ptr)(void))
 {
     /* Intialize the ARM Interrupt Controller(AINTC) */
     IntAINTCInit();
 
     /* Registering I2C0 ISR in AINTC */
-    IntRegister(SYS_INT_I2C1INT, I2CIsr);
+    IntRegister(SYS_INT_I2C1INT, isr_ptr);
 
     /* Setting the priority for the system interrupt in AINTC. */
-    IntPrioritySet(SYS_INT_I2C1INT, 0, AINTC_HOSTINT_ROUTE_IRQ );
+    IntPrioritySet(SYS_INT_I2C1INT, ZERO_PRIORITY, AINTC_HOSTINT_ROUTE_IRQ);
 
     /* Enabling the system interrupt in AINTC. */
     IntSystemEnable(SYS_INT_I2C1INT);
-}
+}// end I2CAintConfigure
 
-static void cleanupInterrupts(void)
+static void cleanupInterrupts(uint32_t baseAddr)
 {
-    I2CMasterIntEnableEx(SOC_I2C_1_REGS, 0x7FF);
-    I2CMasterIntClearEx(SOC_I2C_1_REGS,  0x7FF);
-    I2CMasterIntDisableEx(SOC_I2C_1_REGS, 0x7FF);
-}
-
+	// sets or clears IRQ_ENABLE_SET/CLEAR
+    I2CMasterIntEnableEx(baseAddr, I2C_INT_BITS);
+    I2CMasterIntClearEx(baseAddr,  I2C_INT_BITS);
+    I2CMasterIntDisableEx(baseAddr, I2C_INT_BITS);
+}// end cleanupInterrupts
 
 /*
 ** I2C Interrupt Service Routine. This function will read and write
@@ -367,24 +359,6 @@ void I2CIsr(void)
     I2CMasterIntClearEx(SOC_I2C_1_REGS,
                         (status & ~(I2C_INT_RECV_READY | I2C_INT_TRANSMIT_READY)));
 
-    if(status & I2C_INT_RECV_READY)
-    {
-         /* Receive data from data receive register */
-         dataFromSlave[rCount++] = I2CMasterDataGet(SOC_I2C_1_REGS);
-
-         /* Clear receive ready interrupt status */
-         I2CMasterIntClearEx(SOC_I2C_1_REGS,  I2C_INT_RECV_READY);
-
-         if(rCount == numOfBytes)
-         {
-              /* Disable the receive ready interrupt */
-              I2CMasterIntDisableEx(SOC_I2C_1_REGS, I2C_INT_RECV_READY);
-
-              /* Generate a STOP */
-              I2CMasterStop(SOC_I2C_1_REGS);
-
-         }
-    }
     if (status & I2C_INT_TRANSMIT_READY)
     {
          /* Put data to data transmit register of i2c */
@@ -407,7 +381,7 @@ void I2CIsr(void)
            /* Disable transmit data ready and receive data read interupt */
          I2CMasterIntDisableEx(SOC_I2C_1_REGS, I2C_INT_TRANSMIT_READY |
                                                I2C_INT_RECV_READY     |
-                           I2C_INT_STOP_CONDITION);
+                                               I2C_INT_STOP_CONDITION);
          flag = 0;
     }
 
@@ -422,6 +396,28 @@ void I2CIsr(void)
 
          flag = 0;
     }
+
+
+    /*********** Recieve ISR, not applicipal for this program ******************
+    if(status & I2C_INT_RECV_READY)
+    {
+         // Receive data from data receive register
+         dataFromSlave[rCount++] = I2CMasterDataGet(SOC_I2C_1_REGS);
+
+         // Clear receive ready interrupt status
+         I2CMasterIntClearEx(SOC_I2C_1_REGS,  I2C_INT_RECV_READY);
+
+         if(rCount == numOfBytes)
+         {
+              // Disable the receive ready interrupt
+              I2CMasterIntDisableEx(SOC_I2C_1_REGS, I2C_INT_RECV_READY);
+
+              // Generate a STOP
+              I2CMasterStop(SOC_I2C_1_REGS);
+
+         }
+    }
+	***************************************************************************/
 }
 /***************************** End Of File ************************************/
 

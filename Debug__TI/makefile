@@ -8,8 +8,7 @@ CG_TOOL_ROOT := N:/My Documents/ti-cgt-arm_5.2.5
 
 ORDERED_OBJS += \
 $(GEN_CMDS__FLAG) \
-"./lcd_I2C.obj" \
-"./main.obj" \
+"./int_LCD_I2C.obj" \
 "../BBB.cmd" \
 -l"libc.a" \
 -l"N:\ECE372\I2C_LCD\BBBStarterware\binary\armv7a\cgt_ccs\am335x\drivers\Debug\drivers.lib" \
@@ -145,8 +144,8 @@ I2C_LCD.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(EXE_OUTPUTS__QUOTED)$(BIN_OUTPUTS__QUOTED)
-	-$(RM) "lcd_I2C.pp" "main.pp" 
-	-$(RM) "lcd_I2C.obj" "main.obj" 
+	-$(RM) "int_LCD_I2C.pp" 
+	-$(RM) "int_LCD_I2C.obj" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

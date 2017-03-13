@@ -6,7 +6,7 @@
  * written by: James Ross
  ******************************************************************************/
 
-#include "lcd_I2C.h"
+#include "polling_lcd_I2C.h"
 
 void setupLCD_I2C(uint32_t baseAddr)
 {

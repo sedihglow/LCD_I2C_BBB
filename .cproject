@@ -86,7 +86,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="I2CLCD.c|gpioLEDBlink.c|BBBStarterware|startup_ARMCA8.S" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="polling_lcd_I2C.c|polling_main.c|gpioLEDBlink.c|BBBStarterware|startup_ARMCA8.S" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

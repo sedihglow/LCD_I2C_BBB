@@ -7,27 +7,21 @@ CMD_SRCS += \
 ../BBB.cmd 
 
 C_SRCS += \
-../lcd_I2C.c \
-../main.c 
+../int_LCD_I2C.c 
 
 OBJS += \
-./lcd_I2C.obj \
-./main.obj 
+./int_LCD_I2C.obj 
 
 C_DEPS += \
-./lcd_I2C.pp \
-./main.pp 
+./int_LCD_I2C.pp 
 
 C_DEPS__QUOTED += \
-"lcd_I2C.pp" \
-"main.pp" 
+"int_LCD_I2C.pp" 
 
 OBJS__QUOTED += \
-"lcd_I2C.obj" \
-"main.obj" 
+"int_LCD_I2C.obj" 
 
 C_SRCS__QUOTED += \
-"../lcd_I2C.c" \
-"../main.c" 
+"../int_LCD_I2C.c" 
 
 

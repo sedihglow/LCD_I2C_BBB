@@ -5,13 +5,14 @@
  *
  * written by: James Ross
  ******************************************************************************/
-#ifndef _LCD_I2C_H
-#define _LCD_I2C_H
+#ifndef POLLING_LCD_I2C_H
+#define POLLING_LCD_I2C_H
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include <inttypes.h>
+#include <string.h>
 
 #include "beaglebone.h"
 #include "soc_AM335x.h"

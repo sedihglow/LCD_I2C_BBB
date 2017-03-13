@@ -6,7 +6,7 @@
  * written by: James Ross
  ******************************************************************************/
 
-#include "lcd_I2C.h"
+#include "polling_lcd_I2C.h"
 
 #define MSG "James"
 #define BLINK_TIME 1000 // in milliseconds
