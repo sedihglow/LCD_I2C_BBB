@@ -153,10 +153,6 @@ int main(void)
     	nextLine(SOC_I2C_1_REGS);
     	sendText(SOC_I2C_1_REGS, MSG_L2,MSG_L2_LEN);
     	delay(3000);
-    	dataToSlave[0] = LCD_CMD;
-    	dataToSlave[1] = 0x38;
-    	dataToSlave[2] = 0x18;
-    	SetupI2CTransmit(SOC_I2C_1_REGS, 3);
     }
 }// end main
 

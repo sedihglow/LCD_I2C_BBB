@@ -7,6 +7,7 @@
 	<buildSpec>
 		<buildCommand>
 			<name>org.eclipse.cdt.managedbuilder.core.genmakebuilder</name>
+			<triggers>clean,full,incremental,</triggers>
 			<arguments>
 				<dictionary>
 					<key>?name?</key>
@@ -81,11 +82,11 @@
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
 	</natures>
 	<linkedResources>
-                <link>
-                        <name>board.c</name>
-                        <type>1</type>
-                        <locationURI>PARENT-6-PROJECT_LOC/platform/evmAM335x/board.c</locationURI>
-                </link>
+		<link>
+			<name>board.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/platform/evmAM335x/board.c</locationURI>
+		</link>
 		<link>
 			<name>cpsw.c</name>
 			<type>1</type>
